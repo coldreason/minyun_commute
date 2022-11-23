@@ -22,7 +22,7 @@ void main() async{
   runApp(
     GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: "민족문화 연구원 출퇴근2",
+      title: "민족문화 연구원 출퇴근",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     ),
