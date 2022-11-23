@@ -1,0 +1,8 @@
+{
+  "id": "admin",
+  "password": "admin2501",
+  "admin": true,
+  "name": "admin",
+  "position" : "연구원",
+  "department": "전산실"
+}
