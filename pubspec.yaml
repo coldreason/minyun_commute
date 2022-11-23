@@ -1,0 +1,37 @@
+name: commute
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=2.18.2 <3.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.5
+  get_ip_address: 0.0.5
+  google_fonts: 3.0.1
+  cloud_firestore: ^4.0.4
+  firebase_core: ^2.1.1
+  font_awesome_flutter: 10.1.0
+  auto_size_text: 3.0.0
+  shared_preferences: 2.0.15
+  json_path: 0.4.1
+  intl: 0.17.0
+  timeago: 3.2.2
+  from_css_color: 2.0.0
+  url_launcher: 6.1.5
+  page_transition: 2.0.4
+  table_calendar: ^3.0.8
+  selectable_list: ^0.1.1
+  flutter: 
+    sdk: flutter
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  lints: 2.0.1
+  flutter_test: 
+    sdk: flutter
+
+flutter: 
+  uses-material-design: true
+
