@@ -121,9 +121,6 @@ class HomeController extends GetxController
 
   void dateClicked(DateTime dateTime) {
     if (dateTime.month != targetMonth.month) {
-      print('datetimeclicked');
-      print(dateTime.month);
-      print(targetMonth.month);
     } else if (selectedDate.contains(dateTime)) {
       selectedDate.remove(dateTime);
       update();
@@ -167,8 +164,6 @@ class HomeController extends GetxController
   void monthChange(DateTime month) {
     targetMonth = month;
     selectedDate = [];
-    print('targetmonth');
-    print(targetMonth.month);
   }
 
   String getTargetMonthString() {
@@ -207,6 +202,7 @@ class HomeController extends GetxController
     await homeRepository.setPlans(localUser!.id!, month, plans);
     selectedDate = [];
     getPlans();
+    getAllPlans();
   }
 
   void deletePlan(DateTime date) async {
@@ -227,7 +223,6 @@ class HomeController extends GetxController
     String month = getTargetMonthString();
     Map<String, List<FbPlan>> ret = await homeRepository.getPlansbyMonth(month);
     allPlans = ret;
-    print(allPlans);
     update();
   }
 }

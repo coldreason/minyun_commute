@@ -125,6 +125,8 @@ class LoginView extends GetView<LoginController> {
                     child: GetBuilder<LoginController>(
                         builder: (_) {
                           return TextFormField(
+                            onFieldSubmitted: (val)=>controller.signIn(),
+                            textInputAction: TextInputAction.go,
                             controller: _.passwordTextController,
                             obscureText: !_.passwordVisibility,
                             decoration: InputDecoration(

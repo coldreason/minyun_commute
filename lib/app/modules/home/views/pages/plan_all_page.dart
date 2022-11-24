@@ -11,12 +11,16 @@ class PlanAllPage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: TableCalendar(
+      child: GetBuilder<HomeController>(builder: (_)
+    {
+      return TableCalendar(
         rowHeight: 120,
         calendarStyle: CalendarStyle(
             todayDecoration: BoxDecoration(color: Colors.orange),
             selectedDecoration:
-                BoxDecoration(color: Theme.of(context).primaryColor),
+            BoxDecoration(color: Theme
+                .of(context)
+                .primaryColor),
             todayTextStyle: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 18.0,
@@ -31,7 +35,7 @@ class PlanAllPage extends GetView<HomeController> {
           formatButtonShowsNext: false,
         ),
         onPageChanged: (dateTime) {
-          controller.monthChange(dateTime);
+          controller.monthChangeAll(dateTime);
         },
         startingDayOfWeek: StartingDayOfWeek.sunday,
         calendarBuilders: CalendarBuilders(
@@ -90,7 +94,19 @@ class PlanAllPage extends GetView<HomeController> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "${controller.allUser[controller.allPlans[key]![idx].id!]!.name!} ${formatter.format(controller.allPlans[key]![idx].comeAt!.toDate().hour)}:${formatter.format(controller.allPlans[key]![idx].comeAt!.toDate().minute)}-${formatter.format(controller.allPlans[key]![idx].endAt!.toDate().hour)}:${formatter.format(controller.allPlans[key]![idx].endAt!.toDate().minute)}(${controller.allPlans[key]![idx].unit})",
+                                    "${controller.allUser[controller
+                                        .allPlans[key]![idx].id!]!
+                                        .name!} ${formatter.format(
+                                        controller.allPlans[key]![idx].comeAt!
+                                            .toDate().hour)}:${formatter.format(
+                                        controller.allPlans[key]![idx].comeAt!
+                                            .toDate().minute)}-${formatter
+                                        .format(
+                                        controller.allPlans[key]![idx].endAt!
+                                            .toDate().hour)}:${formatter.format(
+                                        controller.allPlans[key]![idx].endAt!
+                                            .toDate().minute)}(${controller
+                                        .allPlans[key]![idx].unit})",
                                     style: TextStyle(color: Colors.black),
                                   ),
                                 ],
@@ -136,7 +152,19 @@ class PlanAllPage extends GetView<HomeController> {
                               child: Row(
                                 children: [
                                   Text(
-                                    "${controller.allUser[controller.allPlans[key]![idx].id!]!.name!} ${formatter.format(controller.allPlans[key]![idx].comeAt!.toDate().hour)}:${formatter.format(controller.allPlans[key]![idx].comeAt!.toDate().minute)}-${formatter.format(controller.allPlans[key]![idx].endAt!.toDate().hour)}:${formatter.format(controller.allPlans[key]![idx].endAt!.toDate().minute)}(${controller.allPlans[key]![idx].unit})",
+                                    "${controller.allUser[controller
+                                        .allPlans[key]![idx].id!]!
+                                        .name!} ${formatter.format(
+                                        controller.allPlans[key]![idx].comeAt!
+                                            .toDate().hour)}:${formatter.format(
+                                        controller.allPlans[key]![idx].comeAt!
+                                            .toDate().minute)}-${formatter
+                                        .format(
+                                        controller.allPlans[key]![idx].endAt!
+                                            .toDate().hour)}:${formatter.format(
+                                        controller.allPlans[key]![idx].endAt!
+                                            .toDate().minute)}(${controller
+                                        .allPlans[key]![idx].unit})",
                                     style: TextStyle(color: Colors.black),
                                   ),
                                 ],
@@ -153,7 +181,8 @@ class PlanAllPage extends GetView<HomeController> {
         focusedDay: controller.targetMonth,
         firstDay: DateTime.utc(2020),
         lastDay: DateTime.utc(2030),
-      ),
-    );
+      );
+    }));
+
   }
 }

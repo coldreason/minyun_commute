@@ -67,7 +67,7 @@ class PlanCommutePage extends GetView<HomeController> {
                   child: SelectableList<String, String>(
                       items: planTimesH,
                       itemBuilder: (context, text, selected, onTap) => ListTile(
-                          title: Text("text+시"),
+                          title: Text("$text시"),
                           selected: selected,
                           onTap: () {
                             onTap!();
