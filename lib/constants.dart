@@ -25,6 +25,10 @@ class FirebaseConstants{
   static const unit = "unit";
 }
 
+enum UserScreenType{
+  mobile,tablet,pcWeb
+}
+
 final List<String> planTimesH = [
   "06",
   "07",

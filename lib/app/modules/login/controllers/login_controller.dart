@@ -24,9 +24,9 @@ class LoginController extends GetxController {
 
     Get.find<FbAllUserService>().fbAllUser = await loginRepository.getAllUser();
     //for testing
-    // FbUser? fbUser = await loginRepository.getUser('admin');
-    // Get.find<FbUserService>().fbUser = fbUser!;
-    // Get.toNamed(Routes.HOME);
+    FbUser? fbUser = await loginRepository.getUser('admin');
+    Get.find<FbUserService>().fbUser = fbUser!;
+    Get.toNamed(Routes.HOME);
 
   }
 

@@ -23,6 +23,8 @@ class HomeController extends GetxController
   final TextEditingController commentController = TextEditingController();
   final ScrollController scrollControllerB = ScrollController();
 
+
+  UserScreenType userScreenType = UserScreenType.pcWeb;
   FbCommute? localCommute;
   FbUser? localUser;
   late DateTime targetMonth;
@@ -64,6 +66,13 @@ class HomeController extends GetxController
     getPlans();
     getAllPlans();
     super.onInit();
+  }
+
+  void setUserScreenSize(int size){
+    if(size>800)userScreenType = UserScreenType.pcWeb;
+    else if(size > 550) userScreenType = UserScreenType.tablet;
+    else userScreenType = UserScreenType.mobile;
+    update();
   }
 
   //header
