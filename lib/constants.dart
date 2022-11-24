@@ -1,5 +1,6 @@
+import 'package:intl/intl.dart';
+
 class Constants {
-  static const serverApi = 'http://34.64.190.215:9000';
   static const chatPerUser = 'userChat';
   static const chatRoomInfo = "chatRoomInfo";
   static const chats = "chats";
@@ -23,3 +24,39 @@ class FirebaseConstants{
 
   static const unit = "unit";
 }
+
+final List<String> planTimesH = [
+  "06",
+  "07",
+  "08",
+  "09",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14",
+  "15",
+  "16",
+  "17",
+  "18",
+  "19",
+  "20",
+  "21",
+  "22"
+];
+final List<String> planTimesM = [
+  "00",
+  "10",
+  "20",
+  "30",
+  "40",
+  "50",
+];
+
+final planUnitList = [
+  "1",
+  "1.5",
+  "2",
+];
+
+NumberFormat formatter = NumberFormat("00");

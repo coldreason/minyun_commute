@@ -1,5 +1,6 @@
 import 'package:commute/app/flutter_flow/flutter_flow_theme.dart';
 import 'package:commute/app/flutter_flow/flutter_flow_widgets.dart';
+import 'package:commute/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -457,7 +458,7 @@ class PlanCommutePage extends GetView<HomeController> {
               children: [
                 Expanded(
                   child: SelectableList<String, String>(
-                      items: controller.planTimesH,
+                      items: planTimesH,
                       itemBuilder: (context, text, selected, onTap) => ListTile(
                           title: Text("${text}시"),
                           selected: selected,
@@ -473,7 +474,7 @@ class PlanCommutePage extends GetView<HomeController> {
                 ),
                 Expanded(
                   child: SelectableList<String, String>(
-                      items: controller.planTimesM,
+                      items: planTimesM,
                       itemBuilder: (context, text, selected, onTap) => ListTile(
                           title: Text("${text}분"),
                           selected: selected,
@@ -489,7 +490,7 @@ class PlanCommutePage extends GetView<HomeController> {
                 ),
                 Expanded(
                   child: SelectableList<String, String>(
-                      items: controller.planTimesH,
+                      items: planTimesH,
                       itemBuilder: (context, text, selected, onTap) => ListTile(
                           title: Text("${text}시"),
                           selected: selected,
@@ -505,7 +506,7 @@ class PlanCommutePage extends GetView<HomeController> {
                 ),
                 Expanded(
                   child: SelectableList<String, String>(
-                      items: controller.planTimesM,
+                      items: planTimesM,
                       itemBuilder: (context, text, selected, onTap) => ListTile(
                           title: Text("${text}분"),
                           selected: selected,
@@ -521,7 +522,7 @@ class PlanCommutePage extends GetView<HomeController> {
                 ),
                 Expanded(
                   child: SelectableList<String, String>(
-                      items: controller.planUnitList,
+                      items: planUnitList,
                       itemBuilder: (context, text, selected, onTap) => ListTile(
                           title: Text("${text}단위"),
                           selected: selected,

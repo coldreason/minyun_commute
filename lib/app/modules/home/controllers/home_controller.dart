@@ -8,6 +8,7 @@ import 'package:commute/app/data/services/fb_commute_service.dart';
 import 'package:commute/app/data/services/fb_user_service.dart';
 import 'package:commute/app/flutter_flow/flutter_flow_util.dart';
 import 'package:commute/app/routes/app_pages.dart';
+import 'package:commute/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,43 +19,9 @@ class HomeController extends GetxController
 
   HomeController({required this.homeRepository});
 
-  final List<String> planTimesH = [
-    "06",
-    "07",
-    "08",
-    "09",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-  ];
-  final planTimesM = [
-    "00",
-    "10",
-    "20",
-    "30",
-    "40",
-    "50",
-  ];
-
-  final planUnitList = [
-    "1",
-    "1.5",
-    "2",
-  ];
-
-  NumberFormat formatter = NumberFormat("00");
-
   late TabController tabController;
-  late TextEditingController commentController;
-  late ScrollController scrollControllerB;
+  final TextEditingController commentController = TextEditingController();
+  final ScrollController scrollControllerB = ScrollController();
 
   FbCommute? localCommute;
   FbUser? localUser;
@@ -65,31 +32,28 @@ class HomeController extends GetxController
   Map<String, FbUser> allUser = {};
   Map<String, FbCommute> commutes = {};
 
-  String planGoWorkSettingH = "08";
-  String planGoWorkSettingM = "00";
-  String planGoHomeSettingH = "08";
-  String planGoHomeSettingM = "00";
-  String planUnit = "1";
-
-
+  String planGoWorkSettingH = planTimesH[0];
+  String planGoWorkSettingM = planTimesM[0];
+  String planGoHomeSettingH = planTimesH[0];
+  String planGoHomeSettingM = planTimesM[0];
+  String planUnit = planUnitList[0];
 
   @override
   void onInit() async {
-    super.onInit();
     tabController = TabController(length: 4, vsync: this);
-    commentController = TextEditingController();
-    scrollControllerB = ScrollController();
-    DateTime date = Timestamp.now().toDate();
-    targetMonth = date;
-    if (!Get.find<FbUserService>().initialized) Get.offAllNamed(Routes.LOGIN);
-    if (!Get.find<FbAllUserService>().initialized) Get.offAllNamed(Routes.LOGIN);
+    targetMonth = Timestamp.now().toDate();
+
+    // user state do not received : impossible
+    if (!Get.find<FbUserService>().initialized ||
+        !Get.find<FbAllUserService>().initialized)
+      Get.offAllNamed(Routes.LOGIN);
+
     allUser = Get.find<FbAllUserService>().fbAllUser;
     localUser = Get.find<FbUserService>().fbUser;
+
     if (!Get.find<FbCommuteService>().initialized) {
-      String month = date.year.toString() + formatter.format(date.month);
-      String key = date.year.toString() +
-          formatter.format(date.month) +
-          formatter.format(date.day);
+      String month = getTargetMonthString();
+      String key = month + formatter.format(targetMonth.day);
       commutes = await homeRepository.getCommutes(
           Get.find<FbUserService>().fbUser.id!, month);
       Get.find<FbCommuteService>().fbCommute = commutes[key] ??
@@ -99,15 +63,8 @@ class HomeController extends GetxController
     }
     getPlans();
     getAllPlans();
+    super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
 
   //header
   void logout() {
@@ -174,7 +131,6 @@ class HomeController extends GetxController
       selectedDate.add(dateTime);
       update();
     }
-
   }
 
   void changePlanGoWorkSettingH(String target) {
@@ -208,7 +164,7 @@ class HomeController extends GetxController
     //     duration: Duration(milliseconds: 800), curve: Curves.ease);
   }
 
-  void monthChange(DateTime month){
+  void monthChange(DateTime month) {
     targetMonth = month;
     selectedDate = [];
     print('targetmonth');
@@ -227,23 +183,30 @@ class HomeController extends GetxController
     update();
   }
 
-  void setPlan() async{
-    String month = targetMonth.year.toString() + formatter.format(targetMonth.month);
+  void setPlan() async {
+    String month = getTargetMonthString();
     Map<String, FbPlan> plans = Map();
 
     selectedDate.forEach((element) {
-      plans[localUser!.id! +
-          month +
-          formatter.format(element.day)] =
-          FbPlan(
-              id: localUser!.id!,
-              comeAt: Timestamp.fromDate(DateTime(targetMonth.year,targetMonth.month,element.day,int.parse(planGoWorkSettingH),int.parse(planGoWorkSettingM))),
-              endAt: Timestamp.fromDate(DateTime(targetMonth.year,targetMonth.month,element.day,int.parse(planGoHomeSettingH),int.parse(planGoHomeSettingM))),
-              unit: planUnit);
+      plans[localUser!.id! + month + formatter.format(element.day)] = FbPlan(
+          id: localUser!.id!,
+          comeAt: Timestamp.fromDate(DateTime(
+              targetMonth.year,
+              targetMonth.month,
+              element.day,
+              int.parse(planGoWorkSettingH),
+              int.parse(planGoWorkSettingM))),
+          endAt: Timestamp.fromDate(DateTime(
+              targetMonth.year,
+              targetMonth.month,
+              element.day,
+              int.parse(planGoHomeSettingH),
+              int.parse(planGoHomeSettingM))),
+          unit: planUnit);
     });
-      await homeRepository.setPlans(localUser!.id!, month, plans);
-      selectedDate = [];
-      getPlans();
+    await homeRepository.setPlans(localUser!.id!, month, plans);
+    selectedDate = [];
+    getPlans();
   }
 
   void deletePlan(DateTime date) async {
@@ -255,15 +218,15 @@ class HomeController extends GetxController
   }
 
   //page3
-  void monthChangeAll(DateTime month){
+  void monthChangeAll(DateTime month) {
     targetMonth = month;
     getAllPlans();
   }
 
   void getAllPlans() async {
-    String month = targetMonth.year.toString() + formatter.format(targetMonth.month);
+    String month = getTargetMonthString();
     Map<String, List<FbPlan>> ret = await homeRepository.getPlansbyMonth(month);
-    allPlans= ret;
+    allPlans = ret;
     print(allPlans);
     update();
   }
