@@ -142,36 +142,28 @@ class PlanAllPage extends GetView<HomeController> {
                         ],
                       ),
                     ),
-                    if (controller.myPlans[key] != null)
-                      Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Column(
-                          children: [
-                            FittedBox(
+                    Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        height:60,
+                        child: ListView.builder(
+                          itemCount:
+                          (controller.allPlans[key]??[]).length,
+                          itemBuilder: (context, idx) {
+                            return FittedBox(
                               child: Row(
                                 children: [
                                   Text(
-                                    "${formatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${formatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
+                                    "${controller.allUser[controller.allPlans[key]![idx]!.id!]!.name!} ${formatter.format(controller.allPlans[key]![idx]!.comeAt!.toDate().hour)}:${formatter.format(controller.allPlans[key]![idx]!.comeAt!.toDate().minute)}-${formatter.format(controller.allPlans[key]![idx]!.endAt!.toDate().hour)}:${formatter.format(controller.allPlans[key]![idx].endAt!.toDate().minute)}(${controller.allPlans[key]![idx]!.unit})",
                                     style: TextStyle(color: Colors.black),
                                   ),
-                                  Container(
-                                    height: 30,
-                                    width: 30,
-                                    child: MaterialButton(
-                                      onPressed: () {
-                                        controller.deletePlan(date);
-                                      },
-                                      child: Icon(Icons.clear),
-                                    ),
-                                  )
                                 ],
                               ),
-                            ),
-                          ],
+                            );
+                          },
                         ),
-                      )
-                    else
-                      Container()
+                      ),
+                    )
                   ],
                 ));
           },
