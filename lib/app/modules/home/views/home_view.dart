@@ -15,6 +15,9 @@ class HomeView extends GetView<HomeController> {
     controller.setUserScreenSize(MediaQuery.of(context).size.width.toInt());
     return Scaffold(
       appBar: AppBar(
+        leading: BackButton(
+          onPressed: controller.logout,
+        ),
         title: Text('${controller.localUser!.name}님 안녕하세요',
             style: FlutterFlowTheme.of(context)
                 .bodyText1
