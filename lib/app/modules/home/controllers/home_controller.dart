@@ -174,6 +174,7 @@ class HomeController extends GetxController
     targetMonth = month;
     selectedDate = [];
     getPlans();
+    getAllPlans();
   }
 
   String getTargetMonthString() {
@@ -226,6 +227,7 @@ class HomeController extends GetxController
   //page3
   void monthChangeAll(DateTime month) {
     targetMonth = month;
+    getPlans();
     getAllPlans();
   }
 
