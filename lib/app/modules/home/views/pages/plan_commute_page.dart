@@ -119,6 +119,7 @@ class PlanCommutePage extends GetView<HomeController> {
             );
           }),
           GetBuilder<HomeController>(builder: (_) {
+            print("calander rebuld");
             return TableCalendar(
               rowHeight: 120,
               selectedDayPredicate: (day) {

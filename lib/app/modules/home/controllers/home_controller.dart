@@ -173,6 +173,7 @@ class HomeController extends GetxController
   void monthChange(DateTime month) {
     targetMonth = month;
     selectedDate = [];
+    getPlans();
   }
 
   String getTargetMonthString() {
