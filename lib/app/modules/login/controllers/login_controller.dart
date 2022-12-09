@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   late TextEditingController emailAddressController;
   late TextEditingController passwordTextController;
   late bool passwordVisibility;
-
+  String ip = "";
   LoginController({required this.loginRepository});
 
   @override
@@ -22,12 +22,14 @@ class LoginController extends GetxController {
     passwordTextController = TextEditingController();
     passwordVisibility = false;
 
+    ip = (await loginRepository.getIp())??"error";
+
     Get.find<FbAllUserService>().fbAllUser = await loginRepository.getAllUser();
     //for testing
     // FbUser? fbUser = await loginRepository.getUser('dreason');
     // Get.find<FbUserService>().fbUser = fbUser!;
     // Get.toNamed(Routes.HOME);
-
+    update();
   }
 
   void signIn()async{

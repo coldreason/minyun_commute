@@ -43,6 +43,15 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
+              GetBuilder<LoginController>(
+                builder: (_) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                    Text('Ip : '),Text(controller.ip)
+                  ],);
+                }
+              ),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                 child: Container(
