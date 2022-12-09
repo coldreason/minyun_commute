@@ -119,6 +119,17 @@ class PlanCommutePage extends GetView<HomeController> {
               ],
             );
           }),
+          GetBuilder<HomeController>(builder: (_){
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [
+                Text('총 근무 단위 : '),
+                Text(controller.sumPlanUnit.toString()),
+              ],),
+            );
+          },
+
+          ),
           GetBuilder<HomeController>(builder: (_) {
             return TableCalendar(
               rowHeight: 120,

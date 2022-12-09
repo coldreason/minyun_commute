@@ -41,6 +41,8 @@ class HomeController extends GetxController
 
   String planUnit = planUnitList[0];
 
+  num sumPlanUnit = 0;
+
   @override
   void onInit() async {
     tabController = TabController(length: 4, vsync: this);
@@ -133,11 +135,16 @@ class HomeController extends GetxController
     if (dateTime.month != targetMonth.month) {
     } else if (selectedDate.contains(dateTime)) {
       selectedDate.remove(dateTime);
-      update();
     } else {
       selectedDate.add(dateTime);
-      update();
     }
+    _calcSumOfWorkUnitWithNotFixed();
+    update();
+  }
+
+  void _calcSumOfWorkUnitWithNotFixed(){
+    _calcSumOfPlanUnit();
+    sumPlanUnit = sumPlanUnit + selectedDate.length * num.parse(planUnit);
   }
 
   void changePlanGoWorkSettingH(String target) {
@@ -162,6 +169,7 @@ class HomeController extends GetxController
 
   void changePlanUnit(String target) {
     planUnit = target;
+    _calcSumOfWorkUnitWithNotFixed();
     update();
   }
 
@@ -182,12 +190,22 @@ class HomeController extends GetxController
     return targetMonth.year.toString() + formatter.format(targetMonth.month);
   }
 
+  void _calcSumOfPlanUnit(){
+    num buf = 0;
+    myPlans.forEach((key, value) {
+      buf = buf + num.parse(value.unit!);
+    });
+    sumPlanUnit = buf;
+  }
+
   void getPlans() async {
     String month = getTargetMonthString();
     Map<String, FbPlan> ret =
         await homeRepository.getPlans(localUser!.id!, month);
     myPlans = ret;
+    _calcSumOfPlanUnit();
     update();
+
   }
 
   void setPlan() async {
@@ -222,7 +240,9 @@ class HomeController extends GetxController
     String planId = month + formatter.format(date.day);
     await homeRepository.deletePlan(month, myPlans[planId]!.id! + planId);
     myPlans.remove(planId);
+    _calcSumOfPlanUnit();
     update();
+
   }
 
   //page3
