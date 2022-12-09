@@ -45,7 +45,8 @@ class PlanCommutePage extends GetView<HomeController> {
                       onItemSelected: (target) =>
                         controller.changePlanGoWorkSettingH(target)
                       ,
-                      onItemDeselected: (target) {}),
+                      onItemDeselected: (target)=>{}
+                      ),
                 ),
                 Expanded(
                   child: SelectableList<String, String>(

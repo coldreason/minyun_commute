@@ -38,6 +38,7 @@ class HomeController extends GetxController
   String planGoWorkSettingM = planTimesM[0];
   String planGoHomeSettingH = planTimesH[0];
   String planGoHomeSettingM = planTimesM[0];
+
   String planUnit = planUnitList[0];
 
   @override
@@ -45,7 +46,7 @@ class HomeController extends GetxController
     tabController = TabController(length: 4, vsync: this);
     targetMonth = Timestamp.now().toDate();
 
-    // user state do not received : impossible
+    // user state do not received : error
     if (!Get.find<FbUserService>().initialized ||
         !Get.find<FbAllUserService>().initialized)
       Get.offAllNamed(Routes.LOGIN);
