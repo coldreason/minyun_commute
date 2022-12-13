@@ -1,5 +1,5 @@
 import 'package:commute/app/data/models/fb_commute_model.dart';
-import 'package:commute/constants.dart';
+import 'package:commute/utils/helpers/masks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,7 +28,7 @@ class PrintCommutes extends GetView<HomeController> {
                   ],
                 ),
               );
-              FbCommute? dataPath = controller.commutes[controller.getTargetMonthString()+formatter.format(idx)];
+              FbCommute? dataPath = controller.commutes[controller.getTargetMonthString()+dateStringFormatter.format(idx)];
               bool dataExist = dataPath!=null;
               bool goExist = false;
               bool endExist = false;
@@ -38,9 +38,9 @@ class PrintCommutes extends GetView<HomeController> {
               }
               return Row(
                 children: [
-                  PrintTile(text: "${controller.getTargetMonthString()}${formatter.format(idx)}"),
-                  PrintTile(text: goExist?"${formatter.format(dataPath!.comeAt!.toDate().hour)}:${formatter.format(dataPath!.comeAt!.toDate().minute)}":""),
-                  PrintTile(text: endExist?"${formatter.format(dataPath!.endAt!.toDate().hour)}:${formatter.format(dataPath!.endAt!.toDate().minute)}":""),
+                  PrintTile(text: "${controller.getTargetMonthString()}${dateStringFormatter.format(idx)}"),
+                  PrintTile(text: goExist?"${dateStringFormatter.format(dataPath!.comeAt!.toDate().hour)}:${dateStringFormatter.format(dataPath!.comeAt!.toDate().minute)}":""),
+                  PrintTile(text: endExist?"${dateStringFormatter.format(dataPath!.endAt!.toDate().hour)}:${dateStringFormatter.format(dataPath!.endAt!.toDate().minute)}":""),
                   PrintTile(text: (goExist&&endExist)?controller.calcWorkUnit(dataPath!):""),
                   PrintTile(text: dataExist?dataPath.comment??"":""),
                 ],

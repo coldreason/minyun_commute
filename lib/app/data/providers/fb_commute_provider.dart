@@ -1,38 +1,47 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commute/constants.dart';
+import 'package:commute/utils/functions/get_date_string.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 import '../models/fb_commute_model.dart';
 
 class FbCommuteProvider extends GetConnect {
-
-  CollectionReference commuteRef = FirebaseFirestore.instance
-      .collection(FirebaseConstants.commute);
-
-  NumberFormat formatter = new NumberFormat("00");
-
+  CollectionReference commuteRef =
+      FirebaseFirestore.instance.collection(FirebaseConstants.commute);
 
   @override
-  void onInit() {
-  }
+  void onInit() {}
 
-  Future<Map<String,FbCommute>> getCommutesByMonth(String id,String month) async {
-    QuerySnapshot<Map<String, dynamic>> doc = await commuteRef.doc(id).collection(month).get();
-    Map<String,FbCommute> ret = {};
-    doc.docs!.forEach((element) {
-      ret[element.id] = FbCommute.fromJson(element.data());
+  Future<Map<String, FbCommute>> getCommutesByMonth(
+      String id, DateTime month) async {
+    QuerySnapshot<Map<String, dynamic>> doc =
+        await commuteRef.doc(id).collection(getMonthString(month)).get();
+    Map<String, FbCommute> fbCommutesMap = {};
+    doc.docs.forEach((element) {
+      fbCommutesMap[element.id] = FbCommute.fromJson(element.data());
     });
-    return ret;
+    return fbCommutesMap;
   }
 
-  Future<FbCommute> setCommute(String id,Timestamp stamp,FbCommute fbCommute) async{
-    DateTime date = stamp.toDate();
-    String month = date.year.toString() + formatter.format(date.month);
-    String key = month + formatter.format(date.day);
+  Future<FbCommute> getCommuteByDate(String id, DateTime date) async {
+    var doc = await commuteRef
+        .doc(id)
+        .collection(getMonthString(date))
+        .doc(getDateString(date))
+        .get();
+    if (doc.data() != null) return FbCommute.fromJson(doc.data()!);
+    return FbCommute(id: id, workAtLunch: false);
+  }
 
-    await commuteRef.doc(id).collection(month).doc(key).set(fbCommute.toJson());
+  Future<FbCommute> setCommute(
+      String id, DateTime date, FbCommute fbCommute) async {
+    await commuteRef
+        .doc(id)
+        .collection(getMonthString(date))
+        .doc(getDateString(date))
+        .set(fbCommute.toJson());
     return fbCommute;
   }
+
 
 }

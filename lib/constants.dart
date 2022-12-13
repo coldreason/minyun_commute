@@ -21,6 +21,7 @@ class FirebaseConstants{
   static const comeAt = "comeAt";
   static const endAt = "endAt";
   static const comment = "comment";
+  static const workAtLunch = "workAtLunch";
 
   static const unit = "unit";
 }
@@ -68,5 +69,3 @@ final planUnitList = [
   "1.5",
   "2",
 ];
-
-NumberFormat formatter = NumberFormat("00");

@@ -1,4 +1,5 @@
 import 'package:commute/constants.dart';
+import 'package:commute/utils/helpers/masks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -49,8 +50,8 @@ class PlanAllPage extends GetView<HomeController> {
               },
               todayBuilder: (context, date, events) {
                 String key = date.year.toString() +
-                    formatter.format(date.month) +
-                    formatter.format(date.day);
+                    dateStringFormatter.format(date.month) +
+                    dateStringFormatter.format(date.day);
                 return DateBody(
                   date: date,
                   color: Colors.orange,
@@ -59,8 +60,8 @@ class PlanAllPage extends GetView<HomeController> {
               },
               defaultBuilder: (context, date, events) {
                 String key = date.year.toString() +
-                    formatter.format(date.month) +
-                    formatter.format(date.day);
+                    dateStringFormatter.format(date.month) +
+                    dateStringFormatter.format(date.day);
                 return DateBody(
                   date: date,
                   color: Colors.black,
@@ -126,7 +127,7 @@ class PlanUsersTile extends GetView<HomeController> {
         itemBuilder: (context, idx) {
           return Text(
               "${controller.allUser[plans[idx].id!]!.name!} ${controller
-        .userScreenType == UserScreenType.pcWeb? "${formatter.format(plans[idx].comeAt!.toDate().hour)}:${formatter.format(plans[idx].comeAt!.toDate().minute)} - ${formatter.format(plans[idx].endAt!.toDate().hour)}:${formatter.format(plans[idx].endAt!.toDate().minute)}":""}",
+        .userScreenType == UserScreenType.pcWeb? "${dateStringFormatter.format(plans[idx].comeAt!.toDate().hour)}:${dateStringFormatter.format(plans[idx].comeAt!.toDate().minute)} - ${dateStringFormatter.format(plans[idx].endAt!.toDate().hour)}:${dateStringFormatter.format(plans[idx].endAt!.toDate().minute)}":""}",
           style: TextStyle(color: Colors.black, fontSize: fontSize),);
         },
       ),

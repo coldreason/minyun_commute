@@ -1,17 +1,17 @@
-import 'package:commute/app/modules/home/controllers/home_controller.dart';
+import 'package:commute/app/modules/home/controllers/plan_commute_controller.dart';
 import 'package:commute/constants.dart';
+import 'package:commute/utils/helpers/masks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:selectable_list/selectable_list.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class PlanCommutePage extends GetView<HomeController> {
+class PlanCommutePage extends GetView<PlanCommuteController> {
   const PlanCommutePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      controller: controller.scrollControllerB,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -28,7 +28,7 @@ class PlanCommutePage extends GetView<HomeController> {
               ),
             ],
           ),
-          GetBuilder<HomeController>(builder: (_) {
+          GetBuilder<PlanCommuteController>(builder: (_) {
             return Row(
               children: [
                 Expanded(
@@ -119,7 +119,7 @@ class PlanCommutePage extends GetView<HomeController> {
               ],
             );
           }),
-          GetBuilder<HomeController>(builder: (_){
+          GetBuilder<PlanCommuteController>(builder: (_){
             return Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [
@@ -130,7 +130,7 @@ class PlanCommutePage extends GetView<HomeController> {
           },
 
           ),
-          GetBuilder<HomeController>(builder: (_) {
+          GetBuilder<PlanCommuteController>(builder: (_) {
             return TableCalendar(
               rowHeight: 120,
               selectedDayPredicate: (day) {
@@ -163,8 +163,8 @@ class PlanCommutePage extends GetView<HomeController> {
               calendarBuilders: CalendarBuilders(
                 selectedBuilder: (context, date, events) {
                   String key = date.year.toString() +
-                      formatter.format(date.month) +
-                      formatter.format(date.day);
+                      dateStringFormatter.format(date.month) +
+                      dateStringFormatter.format(date.day);
                   return Container(
                       margin: const EdgeInsets.all(4.0),
                       padding: EdgeInsets.all(5),
@@ -195,7 +195,7 @@ class PlanCommutePage extends GetView<HomeController> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${formatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${formatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
+                                          "${dateStringFormatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${dateStringFormatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${dateStringFormatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${dateStringFormatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
                                           style: TextStyle(color: Colors.black),
                                         ),
                                         Container(
@@ -243,8 +243,8 @@ class PlanCommutePage extends GetView<HomeController> {
                 },
                 todayBuilder: (context, date, events) {
                   String key = date.year.toString() +
-                      formatter.format(date.month) +
-                      formatter.format(date.day);
+                      dateStringFormatter.format(date.month) +
+                      dateStringFormatter.format(date.day);
                   return Container(
                       margin: const EdgeInsets.all(4.0),
                       padding: EdgeInsets.all(5),
@@ -272,7 +272,7 @@ class PlanCommutePage extends GetView<HomeController> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${formatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${formatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
+                                          "${dateStringFormatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${dateStringFormatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${dateStringFormatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${dateStringFormatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
                                           style: TextStyle(color: Colors.black),
                                         ),
                                         Container(
@@ -298,8 +298,8 @@ class PlanCommutePage extends GetView<HomeController> {
                 },
                 defaultBuilder: (context, date, events) {
                   String key = date.year.toString() +
-                      formatter.format(date.month) +
-                      formatter.format(date.day);
+                      dateStringFormatter.format(date.month) +
+                      dateStringFormatter.format(date.day);
                   return Container(
                       margin: const EdgeInsets.all(4.0),
                       padding: EdgeInsets.all(5),
@@ -327,7 +327,7 @@ class PlanCommutePage extends GetView<HomeController> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${formatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${formatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${formatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
+                                          "${dateStringFormatter.format(controller.myPlans[key]!.comeAt!.toDate().hour)}:${dateStringFormatter.format(controller.myPlans[key]!.comeAt!.toDate().minute)}-${dateStringFormatter.format(controller.myPlans[key]!.endAt!.toDate().hour)}:${dateStringFormatter.format(controller.myPlans[key]!.endAt!.toDate().minute)}(${controller.myPlans[key]!.unit})",
                                           style: TextStyle(color: Colors.black),
                                         ),
                                         Container(

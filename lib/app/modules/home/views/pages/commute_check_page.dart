@@ -1,4 +1,4 @@
-import 'package:commute/app/modules/home/controllers/home_controller.dart';
+import 'package:commute/app/modules/home/controllers/commute_check_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,13 +6,13 @@ import 'package:get/get.dart';
 import '../../../../flutter_flow/flutter_flow_theme.dart';
 import '../../../../flutter_flow/flutter_flow_widgets.dart';
 
-class CommuteCheckPage extends GetView<HomeController> {
+class CommuteCheckPage extends GetView<CommuteCheckController> {
   const CommuteCheckPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: GetBuilder<HomeController>(builder: (_) {
+      child: GetBuilder<CommuteCheckController>(builder: (_) {
         return Container(
           child: (controller.localCommute == null)
               ? Container()
@@ -50,13 +50,13 @@ class WorkingNowSheet extends StatelessWidget {
   }
 }
 
-class AlreadyGoHomeSheet extends GetView<HomeController> {
+class AlreadyGoHomeSheet extends GetView<CommuteCheckController> {
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GetBuilder<HomeController>(builder: (_) {
+        GetBuilder<CommuteCheckController>(builder: (_) {
           return Center(
             child: IntrinsicHeight(
               child: Container(
