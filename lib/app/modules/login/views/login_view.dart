@@ -226,6 +226,66 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
+              Expanded(
+                child: Align(alignment: Alignment.bottomCenter,
+                child:  Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 6,
+                          color: Color(0x3416202A),
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                      child: SizedBox(
+                        height: 80,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Error : 010-7313-3972'),
+                                  Text(
+                                    '*Road Map*',style: FlutterFlowTheme.of(context).bodyText2,
+                                  ),
+                                  Text('updated at 12.14:16')
+                                ],
+                              ),
+                              Text(
+                                '로그인 Ip제한 : 12/15',style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                              Text(
+                                '자동로그인 : 12/15',style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                              Text(
+                                '출력기능 추가 : 12/16?',style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                              Text(
+                                '근무 내역 수정, 전체 조회등의 admin 기능',style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                              Text(
+                                '비밀번호등 변경',style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                              Text(
+                                '사용자 추가',style: FlutterFlowTheme.of(context).bodyText2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),),
+              )
             ],
           ),
         ),
