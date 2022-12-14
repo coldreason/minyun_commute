@@ -15,7 +15,7 @@ class PlanCommuteController extends GetxController {
   PlanCommuteController({required this.repository});
 
   late DateTime targetMonth;
-  late FbUser localUser;
+  FbUser localUser = Get.find<FbUserService>().fbUser;
 
   FbMyPlanService myPlanService = Get.find<FbMyPlanService>();
 
@@ -34,12 +34,11 @@ class PlanCommuteController extends GetxController {
   @override
   void onInit() async {
     targetMonth = Timestamp.now().toDate();
-    localUser = Get.find<FbUserService>().fbUser;
-    getPlans();
+
+    _getPlans();
     super.onInit();
     update();
   }
-
 
   bool checkSelected(DateTime dateTime) {
     return selectedDate.contains(dateTime);
@@ -96,7 +95,7 @@ class PlanCommuteController extends GetxController {
   void monthChange(DateTime month) {
     targetMonth = month;
     selectedDate = [];
-    getPlans();
+    _getPlans();
   }
 
   void _calcSumOfPlanUnit() {
@@ -106,7 +105,7 @@ class PlanCommuteController extends GetxController {
     });
   }
 
-  void getPlans() async {
+  void _getPlans() async {
     myPlans = myPlanService.getFbPlans(targetMonth) ??
         await repository.getPlans(localUser.id!, targetMonth);
     myPlanService.setFbPlans(targetMonth, myPlans);
@@ -115,10 +114,10 @@ class PlanCommuteController extends GetxController {
   }
 
   void setPlan() async {
-    Map<String, FbPlan> plans = <String, FbPlan>{};
+    Map<String, FbPlan> newPlans = <String, FbPlan>{};
 
     for (DateTime element in selectedDate) {
-      plans[getDateString(element)] = FbPlan(
+      newPlans[getDateString(element)] = FbPlan(
           id: localUser.id!,
           comeAt: Timestamp.fromDate(DateTime(
               targetMonth.year,
@@ -134,13 +133,15 @@ class PlanCommuteController extends GetxController {
               int.parse(planGoHomeSettingM))),
           unit: planUnit);
     }
-    plans.forEach((key, value) {
-      myPlans[key]=value;
+    newPlans.forEach((key, value) {
+      myPlans[key] = value;
     });
+    await repository.setPlans(localUser.id!, targetMonth, newPlans);
     myPlanService.setFbPlans(targetMonth, myPlans);
-    await repository.setPlans(localUser.id!, targetMonth, plans);
+
     selectedDate = [];
-    getPlans();
+    _calcSumOfPlanUnit();
+    update();
   }
 
   void deletePlan(DateTime date) async {

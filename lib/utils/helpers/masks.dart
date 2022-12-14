@@ -1,3 +1,3 @@
 import 'package:intl/intl.dart';
 
-NumberFormat dateStringFormatter = new NumberFormat("00");
+NumberFormat dateStringFormatter = NumberFormat("00");

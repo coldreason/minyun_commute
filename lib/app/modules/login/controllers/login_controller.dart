@@ -9,20 +9,18 @@ import 'package:get/get.dart';
 class LoginController extends GetxController {
   final LoginRepository loginRepository;
 
-  late TextEditingController emailAddressController;
-  late TextEditingController passwordTextController;
-  late bool passwordVisibility;
+  final TextEditingController emailAddressController = TextEditingController();
+  final TextEditingController passwordTextController = TextEditingController();
+  bool passwordVisibility = false;
   String ip = "";
+
   LoginController({required this.loginRepository});
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
-    emailAddressController = TextEditingController();
-    passwordTextController = TextEditingController();
-    passwordVisibility = false;
 
-    ip = (await loginRepository.getIp())??"error";
+    ip = (await loginRepository.getIp()) ?? "error";
 
     Get.find<FbAllUserService>().fbAllUser = await loginRepository.getAllUser();
     //for testing
@@ -32,23 +30,22 @@ class LoginController extends GetxController {
     update();
   }
 
-  void signIn()async{
-    FbUser? fbUser = await loginRepository.getUser(emailAddressController.value.text);
-    if(fbUser==null){
+  void signIn() async {
+    FbUser? fbUser =
+        await loginRepository.getUser(emailAddressController.value.text);
+    if (fbUser == null) {
       Get.dialog(
         AlertDialog(
           title: Text('존재하지 않는 아이디입니다.'),
         ),
       );
-    }
-    else if(passwordTextController.value.text != fbUser.password){
+    } else if (passwordTextController.value.text != fbUser.password) {
       Get.dialog(
         AlertDialog(
           title: Text('비밀번호가 일치하지 않습니다.'),
         ),
       );
-    }
-    else{
+    } else {
       emailAddressController.clear();
       passwordTextController.clear();
       Get.find<FbUserService>().fbUser = fbUser;
@@ -60,12 +57,4 @@ class LoginController extends GetxController {
     passwordVisibility = !passwordVisibility;
     update();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
 }

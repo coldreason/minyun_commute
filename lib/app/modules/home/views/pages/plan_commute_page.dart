@@ -43,10 +43,8 @@ class PlanCommutePage extends GetView<PlanCommuteController> {
                           }),
                       selectedValue: controller.planGoWorkSettingH,
                       onItemSelected: (target) =>
-                        controller.changePlanGoWorkSettingH(target)
-                      ,
-                      onItemDeselected: (target)=>{}
-                      ),
+                          controller.changePlanGoWorkSettingH(target),
+                      onItemDeselected: (target) => {}),
                 ),
                 Expanded(
                   child: SelectableList<String, String>(
@@ -119,16 +117,19 @@ class PlanCommutePage extends GetView<PlanCommuteController> {
               ],
             );
           }),
-          GetBuilder<PlanCommuteController>(builder: (_){
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(mainAxisAlignment: MainAxisAlignment.end,children: [
-                Text('총 근무 단위 : '),
-                Text(controller.sumPlanUnit.toString()),
-              ],),
-            );
-          },
-
+          GetBuilder<PlanCommuteController>(
+            builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('총 근무 단위 : '),
+                    Text(controller.sumPlanUnit.toString()),
+                  ],
+                ),
+              );
+            },
           ),
           GetBuilder<PlanCommuteController>(builder: (_) {
             return TableCalendar(
@@ -139,7 +140,7 @@ class PlanCommutePage extends GetView<PlanCommuteController> {
               calendarStyle: CalendarStyle(
                   todayDecoration: BoxDecoration(color: Colors.orange),
                   selectedDecoration:
-                  BoxDecoration(color: Theme.of(context).primaryColor),
+                      BoxDecoration(color: Theme.of(context).primaryColor),
                   todayTextStyle: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18.0,

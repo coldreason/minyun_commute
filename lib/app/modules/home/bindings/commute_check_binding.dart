@@ -4,12 +4,10 @@ import 'package:commute/app/modules/home/repositories/commute_check_repository.d
 
 import 'package:get/get.dart';
 
-
-class CommuteCheckBinding{
+class CommuteCheckBinding {
   void dependencies() {
     Get.lazyPut<CommuteCheckController>(() => CommuteCheckController(
         repository:
-        CommuteCheckRepository(fbCommuteProvider: FbCommuteProvider())));
-
+            CommuteCheckRepository(fbCommuteProvider: FbCommuteProvider())));
   }
 }

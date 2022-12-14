@@ -1,5 +1,4 @@
 import 'package:commute/app/flutter_flow/flutter_flow_theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,7 @@ class HomeView extends GetView<HomeController> {
         leading: BackButton(
           onPressed: controller.logout,
         ),
-        title: Text('${controller.localUser!.name}님 안녕하세요',
+        title: Text('${controller.localUser.name}님 안녕하세요',
             style: FlutterFlowTheme.of(context)
                 .bodyText1
                 .copyWith(color: Colors.white)),
@@ -57,10 +56,3 @@ class HomeView extends GetView<HomeController> {
     );
   }
 }
-
-
-
-
-
-
-

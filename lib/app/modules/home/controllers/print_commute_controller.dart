@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:commute/app/data/models/fb_commute_model.dart';
 import 'package:commute/app/data/models/fb_user_model.dart';
-import 'package:commute/app/data/services/fb_commute_service.dart';
 import 'package:commute/app/data/services/fb_user_service.dart';
 import 'package:commute/app/modules/home/repositories/print_commute_repository.dart';
 import 'package:commute/constants.dart';
 import 'package:commute/utils/functions/get_date_string.dart';
-import 'package:commute/utils/helpers/masks.dart';
 
 import 'package:get/get.dart';
 
@@ -15,7 +13,7 @@ class PrintCommuteController extends GetxController {
 
   PrintCommuteController({required this.repository});
 
-  late FbUser localUser;
+  final FbUser localUser = Get.find<FbUserService>().fbUser;
   late DateTime targetMonth;
   Map<String, FbCommute> commutes = {};
 
@@ -26,11 +24,13 @@ class PrintCommuteController extends GetxController {
   @override
   void onInit() async {
     targetMonth = Timestamp.now().toDate();
-    localUser = Get.find<FbUserService>().fbUser;
 
     commutes = await repository.getCommutes(localUser.id!, targetMonth);
+
+    _generateCommuteList();
+    update();
+
     super.onInit();
-    generateCommuteList();
   }
 
   void toLeft() async {
@@ -40,7 +40,8 @@ class PrintCommuteController extends GetxController {
       targetMonth = DateTime(targetMonth.year, targetMonth.month - 1);
     }
     commutes = await repository.getCommutes(localUser.id!, targetMonth);
-    generateCommuteList();
+    _generateCommuteList();
+    update();
   }
 
   void toRight() async {
@@ -50,68 +51,65 @@ class PrintCommuteController extends GetxController {
       targetMonth = DateTime(targetMonth.year, targetMonth.month + 1);
     }
     commutes = await repository.getCommutes(localUser.id!, targetMonth);
-    generateCommuteList();
+    _generateCommuteList();
+    update();
+
   }
 
-  void generateCommuteList() {
+  void _generateCommuteList() {
     totalWorkUnit = 0;
     commutesList = [];
     for (int i = 0;
         i < DateTime(targetMonth.year, targetMonth.month + 1, 0).day;
         i++) {
-      FbCommute? dataPath = commutes[getDateStringWithidx(i)];
-      CommuteStatus status = calcStatus(dataPath);
+      FbCommute? dataPath = commutes[_getDateStringWithidx(i)];
+      CommuteStatus status = _calcStatus(dataPath);
       String workUnit = '';
-      if(status == CommuteStatus.EndExist){
-        workUnit = calcWorkUnit(dataPath!);
-        totalWorkUnit += num.parse(workUnit!=''?workUnit:"0");
+      if (status == CommuteStatus.endExist) {
+        workUnit = _calcWorkUnit(dataPath!);
+        totalWorkUnit += num.parse(workUnit != '' ? workUnit : "0");
       }
 
       commutesList.add([
-        getDateStringWithidx(i),
-        status != CommuteStatus.DataNotExist
-            ? stampToString(dataPath!.comeAt!)
+        _getDateStringWithidx(i),
+        status != CommuteStatus.dataNotExist
+            ? dateTimeToString(dataPath!.comeAt!.toDate())
             : "",
-        status == CommuteStatus.EndExist ? stampToString(dataPath!.endAt!) : "",
+        status == CommuteStatus.endExist ? dateTimeToString(dataPath!.endAt!.toDate()) : "",
         workUnit,
-        status == CommuteStatus.EndExist ? dataPath!.comment ?? "" : ""
+        status == CommuteStatus.endExist ? dataPath!.comment ?? "" : ""
       ]);
     }
-    update();
   }
 
-  CommuteStatus calcStatus(FbCommute? fbCommute) {
-    if (fbCommute == null) return CommuteStatus.DataNotExist;
-    if (fbCommute.endAt != null) return CommuteStatus.EndExist;
-    return CommuteStatus.GoExist;
+  CommuteStatus _calcStatus(FbCommute? fbCommute) {
+    if (fbCommute == null) return CommuteStatus.dataNotExist;
+    if (fbCommute.endAt != null) return CommuteStatus.endExist;
+    return CommuteStatus.goExist;
   }
 
-  String calcWorkUnit(FbCommute commute) {
+  String _calcWorkUnit(FbCommute commute) {
     DateTime distance = (Timestamp.fromMillisecondsSinceEpoch(
             commute.endAt!.millisecondsSinceEpoch -
                 commute.comeAt!.millisecondsSinceEpoch))
         .toDate();
     int total = (distance.hour - 9) * 60 +
         distance.minute -
-        ((commute!.workAtLunch == true) ? 0 : 60);
-    if (total > 390)
+        ((commute.workAtLunch == true) ? 0 : 60);
+    if (total > 390) {
       return planUnitList[2];
-    else if (total > 285)
+    } else if (total > 285) {
       return planUnitList[1];
-    else if (total < 60) return "";
+    } else if (total < 60) {
+      return "";
+    }
     return planUnitList[0];
   }
 
-  void getAllCommutes() async {
-    commutes = await repository.getCommutes(localUser.id!, targetMonth);
-  }
-
-  getDateStringWithidx(int idx) {
+  String _getDateStringWithidx(int idx) {
     return getDateString(
         DateTime(targetMonth.year, targetMonth.month, idx + 1));
   }
 
-  String stampToString(Timestamp timestamp) {
-    return "${dateStringFormatter.format(timestamp.toDate().hour)}:${dateStringFormatter.format(timestamp.toDate().minute)}";
-  }
+
 }

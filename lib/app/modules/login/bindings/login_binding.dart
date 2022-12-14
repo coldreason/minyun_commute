@@ -9,7 +9,9 @@ class LoginBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<LoginController>(
-      () => LoginController(loginRepository: LoginRepository(fbUserProvider: FbUserProvider(), ipProvider: IPProvider())),
+      () => LoginController(
+          loginRepository: LoginRepository(
+              fbUserProvider: FbUserProvider(), ipProvider: IPProvider())),
     );
   }
 }

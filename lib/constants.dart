@@ -1,17 +1,15 @@
-import 'package:intl/intl.dart';
-
 class Constants {
   static const chatPerUser = 'userChat';
   static const chatRoomInfo = "chatRoomInfo";
   static const chats = "chats";
 }
 
-class FirebaseConstants{
+class FirebaseConstants {
   static const user = "user";
   static const commute = "commute";
   static const plan = "plan";
 
-  static const id =  "id";
+  static const id = "id";
   static const password = "password";
   static const admin = "admin";
   static const name = "name";
@@ -26,16 +24,10 @@ class FirebaseConstants{
   static const unit = "unit";
 }
 
-enum UserScreenType{
-  mobile,tablet,pcWeb
-}
+enum UserScreenType { mobile, tablet, pcWeb }
 
-enum CommuteStatus{
-  DataNotExist, GoExist,
-  EndExist
-}
-
-final List<String> planTimesH = [
+enum CommuteStatus { dataNotExist, goExist, endExist }
+const List<String> planTimesH = [
   "06",
   "07",
   "08",
@@ -54,7 +46,7 @@ final List<String> planTimesH = [
   "21",
   "22"
 ];
-final List<String> planTimesM = [
+const List<String> planTimesM = [
   "00",
   "05",
   "10",
@@ -69,7 +61,7 @@ final List<String> planTimesM = [
   "55",
 ];
 
-final planUnitList = [
+const planUnitList = [
   "1",
   "1.5",
   "2",

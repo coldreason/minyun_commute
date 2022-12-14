@@ -6,46 +6,59 @@ import 'package:get/get.dart';
 import '../models/fb_plan_model.dart';
 
 class FbPlanProvider extends GetConnect {
+  CollectionReference planRef =
+      FirebaseFirestore.instance.collection(FirebaseConstants.plan);
 
-  CollectionReference planRef = FirebaseFirestore.instance
-      .collection(FirebaseConstants.plan);
   @override
-  void onInit() {
-  }
+  void onInit() {}
 
-  Future<Map<String,List<FbPlan>>> getPlansByMonth(DateTime month) async {
-    QuerySnapshot<Map<String, dynamic>> doc = await planRef.doc(getMonthString(month)).collection(getMonthString(month)).get();
-    Map<String,List<FbPlan>> ret = {};
-    for (QueryDocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
-      String key = element.id.substring(element.id.length-8);
-      List<FbPlan> bufList = ret[key]??[];
+  Future<Map<String, List<FbPlan>>> getPlansByMonth(DateTime month) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await planRef
+        .doc(getMonthString(month))
+        .collection(getMonthString(month))
+        .get();
+    Map<String, List<FbPlan>> ret = {};
+    for (QueryDocumentSnapshot<Map<String, dynamic>> element
+        in querySnapshot.docs) {
+      String key = element.id.substring(element.id.length - 8);
+      List<FbPlan> bufList = ret[key] ?? [];
       bufList.add(FbPlan.fromJson(element.data()));
       ret[key] = bufList;
     }
+
     return ret;
   }
 
-  Future<void> setPlan(String id, DateTime date,Map<String,FbPlan> plans) async{
-
-    plans.forEach((key, value) async{
-      await planRef.doc(getMonthString(date)).collection(getMonthString(date)).doc(id+key).set(value.toJson());
+  Future<void> setPlan(
+      String id, DateTime date, Map<String, FbPlan> plans) async {
+    plans.forEach((key, value) async {
+      await planRef
+          .doc(getMonthString(date))
+          .collection(getMonthString(date))
+          .doc(id + key)
+          .set(value.toJson());
     });
   }
 
-  Future<void> deletePlan(String id, DateTime date) async{
-      await planRef.doc(getMonthString(date)).collection(getMonthString(date)).doc(id+getDateString(date)).delete();
+  Future<void> deletePlan(String id, DateTime date) async {
+    await planRef
+        .doc(getMonthString(date))
+        .collection(getMonthString(date))
+        .doc(id + getDateString(date))
+        .delete();
   }
 
+  Future<Map<String, FbPlan>> getFbPlanByIdMonth(
+      String id, DateTime month) async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await planRef
+        .doc(getMonthString(month))
+        .collection(getMonthString(month))
+        .where(FirebaseConstants.id, isEqualTo: id)
+        .get();
 
-  Future<Map<String,FbPlan>> getFbPlanByIdMonth(String id, DateTime month) async {
-    QuerySnapshot<Map<String, dynamic>> doc = await planRef.doc(getMonthString(month)).collection(getMonthString(month)).where("id",isEqualTo: id).get();
-
-    Map<String,FbPlan> ret = {};
-    for (QueryDocumentSnapshot<Map<String, dynamic>> element in doc.docs) {
-      String key = element.id.substring(element.id.length-8);
-      ret[key] = FbPlan.fromJson(element.data());
-    }
-    return ret;
+    return {
+      for (QueryDocumentSnapshot<Map<String, dynamic>> e in querySnapshot.docs)
+        e.id.substring(e.id.length - 8): FbPlan.fromJson(e.data())
+    };
   }
-
 }

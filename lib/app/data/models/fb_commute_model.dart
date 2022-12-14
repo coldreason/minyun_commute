@@ -7,7 +7,7 @@ class FbCommute {
   Timestamp? endAt;
   bool? workAtLunch;
 
-  FbCommute({this.id, this.comment, this.comeAt, this.endAt,this.workAtLunch});
+  FbCommute({this.id, this.comment, this.comeAt, this.endAt, this.workAtLunch});
 
   FbCommute.fromJson(Map<String, dynamic> json) {
     id = json['id'];

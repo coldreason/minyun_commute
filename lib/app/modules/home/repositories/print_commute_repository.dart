@@ -4,9 +4,8 @@ import 'package:commute/app/data/providers/fb_commute_provider.dart';
 class PrintCommuteRepository {
   final FbCommuteProvider fbCommuteProvider;
 
-  PrintCommuteRepository({required this.fbCommuteProvider})
-      : assert(fbCommuteProvider != null);
+  PrintCommuteRepository({required this.fbCommuteProvider});
 
-  Future<Map<String,FbCommute>> getCommutes(String id,DateTime month) => fbCommuteProvider.getCommutesByMonth(id,month);
-
+  Future<Map<String, FbCommute>> getCommutes(String id, DateTime month) =>
+      fbCommuteProvider.getCommutesByMonth(id, month);
 }

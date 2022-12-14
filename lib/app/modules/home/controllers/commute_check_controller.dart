@@ -17,49 +17,40 @@ class CommuteCheckController extends GetxController {
   final TextEditingController commentController = TextEditingController();
 
   FbCommute? localCommute;
-  late FbUser localUser;
+  FbUser localUser = Get.find<FbUserService>().fbUser;
   late DateTime targetMonth;
 
   @override
   void onInit() async {
-
     targetMonth = Timestamp.now().toDate();
-    localUser = Get.find<FbUserService>().fbUser;
     if (!Get.find<FbCommuteService>().initialized) {
-      Get.find<FbCommuteService>().fbCommute = await repository.getCommute(
-          localUser.id!, targetMonth);
+      Get.find<FbCommuteService>().fbCommute =
+          await repository.getCommute(localUser.id!, targetMonth);
     }
     localCommute = Get.find<FbCommuteService>().fbCommute;
     super.onInit();
     update();
-
   }
 
   void changeLunchTimeWork(bool value) async {
     localCommute!.workAtLunch = value;
 
     Get.find<FbCommuteService>().fbCommute = await repository.setCommute(
-        localUser.id!,
-        Timestamp.now().toDate(),
-        localCommute!);
+        localUser.id!, Timestamp.now().toDate(), localCommute!);
     update();
   }
 
   void checkStart() async {
     localCommute!.comeAt = Timestamp.now();
     Get.find<FbCommuteService>().fbCommute = await repository.setCommute(
-        localUser.id!,
-        localCommute!.comeAt!.toDate(),
-        localCommute!);
+        localUser.id!, localCommute!.comeAt!.toDate(), localCommute!);
     update();
   }
 
   void checkFinish() async {
     localCommute!.endAt = Timestamp.now();
     Get.find<FbCommuteService>().fbCommute = await repository.setCommute(
-        localUser.id!,
-        localCommute!.endAt!.toDate(),
-        localCommute!);
+        localUser.id!, localCommute!.endAt!.toDate(), localCommute!);
     update();
   }
 

@@ -14,22 +14,24 @@ class FbCommuteProvider extends GetConnect {
 
   Future<Map<String, FbCommute>> getCommutesByMonth(
       String id, DateTime month) async {
-    QuerySnapshot<Map<String, dynamic>> doc =
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
         await commuteRef.doc(id).collection(getMonthString(month)).get();
-    Map<String, FbCommute> fbCommutesMap = {};
-    doc.docs.forEach((element) {
-      fbCommutesMap[element.id] = FbCommute.fromJson(element.data());
-    });
-    return fbCommutesMap;
+
+    return {
+      for (QueryDocumentSnapshot<Map<String, dynamic>> e in querySnapshot.docs)
+        e.id: FbCommute.fromJson(e.data())
+    };
   }
 
   Future<FbCommute> getCommuteByDate(String id, DateTime date) async {
-    var doc = await commuteRef
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot = await commuteRef
         .doc(id)
         .collection(getMonthString(date))
         .doc(getDateString(date))
         .get();
-    if (doc.data() != null) return FbCommute.fromJson(doc.data()!);
+    if (documentSnapshot.data() != null) {
+      return FbCommute.fromJson(documentSnapshot.data()!);
+    }
     return FbCommute(id: id, workAtLunch: false);
   }
 
@@ -42,6 +44,4 @@ class FbCommuteProvider extends GetConnect {
         .set(fbCommute.toJson());
     return fbCommute;
   }
-
-
 }

@@ -7,3 +7,7 @@ String getMonthString(DateTime date) {
 String getDateString(DateTime date) {
   return getMonthString(date) + dateStringFormatter.format(date.day);
 }
+
+String dateTimeToString(DateTime dateTime) {
+  return "${dateStringFormatter.format(dateTime.hour)}:${dateStringFormatter.format(dateTime.minute)}";
+}

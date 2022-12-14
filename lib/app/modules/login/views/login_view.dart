@@ -1,4 +1,3 @@
-import 'package:commute/app/flutter_flow/flutter_flow_icon_button.dart';
 import 'package:commute/app/flutter_flow/flutter_flow_theme.dart';
 import 'package:commute/app/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +9,6 @@ import '../controllers/login_controller.dart';
 class LoginView extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -43,15 +40,12 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
               ),
-              GetBuilder<LoginController>(
-                builder: (_) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                    Text('Ip : '),Text(controller.ip)
-                  ],);
-                }
-              ),
+              GetBuilder<LoginController>(builder: (_) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [Text('Ip : '), Text(controller.ip)],
+                );
+              }),
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                 child: Container(
@@ -106,9 +100,9 @@ class LoginView extends GetView<LoginController> {
                         ),
                         filled: true,
                         fillColor:
-                        FlutterFlowTheme.of(context).secondaryBackground,
+                            FlutterFlowTheme.of(context).secondaryBackground,
                         contentPadding:
-                        EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
+                            EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyText1,
                       maxLines: null,
@@ -133,66 +127,64 @@ class LoginView extends GetView<LoginController> {
                   ),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                    child: GetBuilder<LoginController>(
-                        builder: (_) {
-                          return TextFormField(
-                            onFieldSubmitted: (val)=>controller.signIn(),
-                            textInputAction: TextInputAction.go,
-                            controller: _.passwordTextController,
-                            obscureText: !_.passwordVisibility,
-                            decoration: InputDecoration(
-                              labelText: 'Password',
-                              labelStyle: FlutterFlowTheme.of(context).bodyText2,
-                              hintStyle: FlutterFlowTheme.of(context).bodyText2,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Color(0x00000000),
-                                  width: 1,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              filled: true,
-                              fillColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                              contentPadding:
-                              EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
-                              suffixIcon: InkWell(
-                                onTap: _.changePasswordVisibility,
-                                focusNode: FocusNode(skipTraversal: true),
-                                child: Icon(
-                                  _.passwordVisibility
-                                      ? Icons.visibility_outlined
-                                      : Icons.visibility_off_outlined,
-                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                  size: 22,
-                                ),
-                              ),
+                    child: GetBuilder<LoginController>(builder: (_) {
+                      return TextFormField(
+                        onFieldSubmitted: (val) => controller.signIn(),
+                        textInputAction: TextInputAction.go,
+                        controller: _.passwordTextController,
+                        obscureText: !_.passwordVisibility,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: FlutterFlowTheme.of(context).bodyText2,
+                          hintStyle: FlutterFlowTheme.of(context).bodyText2,
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
                             ),
-                            style: FlutterFlowTheme.of(context).bodyText1,
-                          );
-                        }
-                    ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          errorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0x00000000),
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          filled: true,
+                          fillColor:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          contentPadding:
+                              EdgeInsetsDirectional.fromSTEB(20, 24, 20, 24),
+                          suffixIcon: InkWell(
+                            onTap: _.changePasswordVisibility,
+                            focusNode: FocusNode(skipTraversal: true),
+                            child: Icon(
+                              _.passwordVisibility
+                                  ? Icons.visibility_outlined
+                                  : Icons.visibility_off_outlined,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 22,
+                            ),
+                          ),
+                        ),
+                        style: FlutterFlowTheme.of(context).bodyText1,
+                      );
+                    }),
                   ),
                 ),
               ),
@@ -210,12 +202,12 @@ class LoginView extends GetView<LoginController> {
                         height: 50,
                         color: FlutterFlowTheme.of(context).primaryColor,
                         textStyle:
-                        FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w500,
-                        ),
+                            FlutterFlowTheme.of(context).subtitle2.override(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
                         elevation: 3,
                         borderSide: BorderSide(
                           color: Colors.transparent,
@@ -227,64 +219,75 @@ class LoginView extends GetView<LoginController> {
                 ),
               ),
               Expanded(
-                child: Align(alignment: Alignment.bottomCenter,
-                child:  Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                  child: Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 6,
-                          color: Color(0x3416202A),
-                          offset: Offset(0, 2),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
-                      child: SizedBox(
-                        height: 80,
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Error : 010-7313-3972'),
-                                  Text(
-                                    '*Road Map*',style: FlutterFlowTheme.of(context).bodyText2,
-                                  ),
-                                  Text('updated at 12.14:16')
-                                ],
-                              ),
-                              Text(
-                                '로그인 Ip제한 : 12/15',style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              Text(
-                                '자동로그인 : 12/15',style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              Text(
-                                '출력기능 추가 : 12/16?',style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              Text(
-                                '근무 내역 수정, 전체 조회등의 admin 기능',style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              Text(
-                                '비밀번호등 변경',style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                              Text(
-                                '사용자 추가',style: FlutterFlowTheme.of(context).bodyText2,
-                              ),
-                            ],
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 6,
+                            color: Color(0x3416202A),
+                            offset: Offset(0, 2),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(2, 2, 2, 2),
+                        child: SizedBox(
+                          height: 80,
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Error : 010-7313-3972'),
+                                    Text(
+                                      '*Road Map*',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2,
+                                    ),
+                                    Text('updated at 12.14:16')
+                                  ],
+                                ),
+                                Text(
+                                  '로그인 Ip제한 : 12/15',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                                Text(
+                                  '자동로그인 : 12/15',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                                Text(
+                                  '출력기능 추가 : 12/16?',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                                Text(
+                                  '근무 내역 수정, 전체 조회등의 admin 기능',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                                Text(
+                                  '비밀번호등 변경',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                                Text(
+                                  '사용자 추가',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),),
+                ),
               )
             ],
           ),

@@ -5,31 +5,23 @@ import 'package:get/get.dart';
 import '../models/fb_user_model.dart';
 
 class FbUserProvider extends GetConnect {
-
   CollectionReference<FbUser> userRef = FirebaseFirestore.instance
       .collection(FirebaseConstants.user)
       .withConverter<FbUser>(
-    fromFirestore: (snapshot, _) => FbUser.fromJson(snapshot.data()!),
-    toFirestore: (FbUser, _) => FbUser.toJson(),
-  );
+        fromFirestore: (snapshot, _) => FbUser.fromJson(snapshot.data()!),
+        toFirestore: (FbUser, _) => FbUser.toJson(),
+      );
 
-  Future<FbUser?> getUser(String userId)async{
-    DocumentSnapshot<FbUser> userDoc = await userRef.doc(userId).get();
-    FbUser? user = userDoc.data();
-    return user;
+  Future<FbUser?> getUser(String userId) async {
+    DocumentSnapshot<FbUser> documentSnapshot = await userRef.doc(userId).get();
+    return documentSnapshot.data();
   }
 
-  Future<Map<String,FbUser>> getAllUser() async {
-    QuerySnapshot<FbUser> doc = await userRef.get();
-    Map<String,FbUser> ret = {};
-    doc.docs.forEach((element) {
-      ret[element.id] = element.data();
-    });
-    return ret;
-  }
+  Future<Map<String, FbUser>> getAllUser() async {
+    QuerySnapshot<FbUser> querySnapshot = await userRef.get();
 
-  @override
-  void onInit() {
+    return {
+      for (QueryDocumentSnapshot<FbUser> e in querySnapshot.docs) e.id: e.data()
+    };
   }
-
 }

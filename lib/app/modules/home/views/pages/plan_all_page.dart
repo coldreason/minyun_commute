@@ -1,79 +1,77 @@
+import 'package:commute/app/data/services/screen_type_service.dart';
+import 'package:commute/app/modules/home/controllers/plan_all_controller.dart';
 import 'package:commute/constants.dart';
-import 'package:commute/utils/helpers/masks.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../data/models/fb_plan_model.dart';
-import '../../controllers/home_controller.dart';
-
-
-class PlanAllPage extends GetView<HomeController> {
+class PlanAllPage extends GetView<PlanAllController> {
   const PlanAllPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    UserScreenType userScreenType =
+        Get.find<ScreenTypeService>().userScreenType;
     return SingleChildScrollView(
-        child: GetBuilder<HomeController>(builder: (_) {
-          return TableCalendar(
-            rowHeight: controller.userScreenType == UserScreenType.pcWeb
-                ? 130 : controller.userScreenType == UserScreenType.tablet
+        child: GetBuilder<PlanAllController>(builder: (_) {
+      return TableCalendar(
+        rowHeight: userScreenType == UserScreenType.pcWeb
+            ? 130
+            : userScreenType == UserScreenType.tablet
                 ? 100
-                :
-            80,
-            calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(color: Colors.orange),
-                selectedDecoration:
-                BoxDecoration(color: Theme
-                    .of(context)
-                    .primaryColor),
-                todayTextStyle: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                    color: Colors.white)),
-            headerStyle: HeaderStyle(
-              titleCentered: true,
-              formatButtonDecoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(20.0),
+                : 80,
+        calendarStyle: CalendarStyle(
+            todayDecoration: BoxDecoration(color: Colors.orange),
+            selectedDecoration:
+                BoxDecoration(color: Theme.of(context).primaryColor),
+            todayTextStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+                color: Colors.white)),
+        headerStyle: HeaderStyle(
+          titleCentered: true,
+          formatButtonDecoration: BoxDecoration(
+            color: Colors.orange,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          formatButtonTextStyle: TextStyle(color: Colors.white),
+          formatButtonShowsNext: false,
+        ),
+        onPageChanged: (dateTime) {
+          controller.monthChangeAll(dateTime);
+        },
+        startingDayOfWeek: StartingDayOfWeek.sunday,
+        calendarBuilders: CalendarBuilders(
+          outsideBuilder: (context, date, events) {
+            return DateBody(date: date, color: Colors.grey);
+          },
+          todayBuilder: (context, date, events) {
+            return DateBody(
+              date: date,
+              color: Colors.orange,
+              body: PlanUsersTile(
+                plans: controller.getCalanderListString(date, userScreenType),
+                userScreenType: userScreenType,
               ),
-              formatButtonTextStyle: TextStyle(color: Colors.white),
-              formatButtonShowsNext: false,
-            ),
-            onPageChanged: (dateTime) {
-              controller.monthChangeAll(dateTime);
-            },
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            calendarBuilders: CalendarBuilders(
-              outsideBuilder: (context, date, events) {
-                return DateBody(date: date, color: Colors.grey);
-              },
-              todayBuilder: (context, date, events) {
-                String key = date.year.toString() +
-                    dateStringFormatter.format(date.month) +
-                    dateStringFormatter.format(date.day);
-                return DateBody(
-                  date: date,
-                  color: Colors.orange,
-                  body: PlanUsersTile(plans: controller.allPlans[key] ?? []),
-                );
-              },
-              defaultBuilder: (context, date, events) {
-                String key = date.year.toString() +
-                    dateStringFormatter.format(date.month) +
-                    dateStringFormatter.format(date.day);
-                return DateBody(
-                  date: date,
-                  color: Colors.black,
-                  body: PlanUsersTile(plans: controller.allPlans[key] ?? []),
-                );
-              },
-            ),
-            focusedDay: controller.targetMonth,
-            firstDay: DateTime.utc(2020),
-            lastDay: DateTime.utc(2030),
-          );
-        }));
+            );
+          },
+          defaultBuilder: (context, date, events) {
+            return DateBody(
+              date: date,
+              color: Colors.black,
+              body: PlanUsersTile(
+                plans: controller.getCalanderListString(date, userScreenType),
+                userScreenType: userScreenType,
+              ),
+            );
+          },
+        ),
+        focusedDay: controller.targetMonth,
+        firstDay: DateTime.utc(2020),
+        lastDay: DateTime.utc(2030),
+      );
+    }));
   }
 }
 
@@ -112,23 +110,29 @@ class DateBody extends StatelessWidget {
   }
 }
 
-class PlanUsersTile extends GetView<HomeController> {
-  const PlanUsersTile({Key? key, required this.plans}) : super(key: key);
-  final List<FbPlan> plans;
+class PlanUsersTile extends GetView<PlanAllController> {
+  const PlanUsersTile(
+      {Key? key, required this.plans, required this.userScreenType})
+      : super(key: key);
+  final List<String> plans;
+  final UserScreenType userScreenType;
 
   @override
   Widget build(BuildContext context) {
-    double fontSize = controller.userScreenType == UserScreenType.pcWeb
-        ? 10 : controller.userScreenType == UserScreenType.tablet ? 9 : 8;
+    double fontSize = userScreenType == UserScreenType.pcWeb
+        ? 10
+        : userScreenType == UserScreenType.tablet
+            ? 9
+            : 8;
     return Padding(
       padding: const EdgeInsets.all(2.0),
       child: ListView.builder(
         itemCount: plans.length,
         itemBuilder: (context, idx) {
           return Text(
-              "${controller.allUser[plans[idx].id!]!.name!} ${controller
-        .userScreenType == UserScreenType.pcWeb? "${dateStringFormatter.format(plans[idx].comeAt!.toDate().hour)}:${dateStringFormatter.format(plans[idx].comeAt!.toDate().minute)} - ${dateStringFormatter.format(plans[idx].endAt!.toDate().hour)}:${dateStringFormatter.format(plans[idx].endAt!.toDate().minute)}":""}",
-          style: TextStyle(color: Colors.black, fontSize: fontSize),);
+            plans[idx],
+            style: TextStyle(color: Colors.black, fontSize: fontSize),
+          );
         },
       ),
     );

@@ -6,10 +6,14 @@ class LoginRepository {
   final FbUserProvider fbUserProvider;
   final IPProvider ipProvider;
 
-  LoginRepository({required this.fbUserProvider,required this.ipProvider, })
-      : assert(fbUserProvider != null);
+  LoginRepository({
+    required this.fbUserProvider,
+    required this.ipProvider,
+  });
 
   Future<FbUser?> getUser(String userId) => fbUserProvider.getUser(userId);
-  Future<Map<String,FbUser>> getAllUser() => fbUserProvider.getAllUser();
-  Future<String?> getIp()=> ipProvider.getIP();
+
+  Future<Map<String, FbUser>> getAllUser() => fbUserProvider.getAllUser();
+
+  Future<String?> getIp() => ipProvider.getIP();
 }

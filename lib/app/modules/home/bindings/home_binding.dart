@@ -10,10 +10,7 @@ class HomeBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut<HomeController>(
-      () => HomeController(
-          homeRepository: HomeRepository(
-              fbCommuteProvider: FbCommuteProvider(),
-              fbPlanProvider: FbPlanProvider())),
+      () => HomeController(homeRepository: HomeRepository()),
     );
     CommuteCheckBinding().dependencies();
   }

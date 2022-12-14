@@ -1,14 +1,16 @@
 import 'package:commute/app/data/models/fb_commute_model.dart';
 import 'package:get/get.dart';
 
-class FbCommuteService extends GetxService{
+class FbCommuteService extends GetxService {
   bool _initialized = false;
   FbCommute? _fbCommute;
+
   FbCommute get fbCommute => _fbCommute!;
 
+  @override
   bool get initialized => _initialized;
 
-  void clear(){
+  void clear() {
     _fbCommute = null;
     _initialized = false;
   }

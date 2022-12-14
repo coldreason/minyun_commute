@@ -17,14 +17,14 @@ class CommuteCheckPage extends GetView<CommuteCheckController> {
           child: (controller.localCommute == null)
               ? Container()
               : (controller.localCommute!.comeAt == null)
-              ? NotCommuteYetSheet(
-            func: controller.checkStart,
-          )
-              : (controller.localCommute!.endAt == null)
-              ? WorkingNowSheet(
-            func: controller.checkFinish,
-          )
-              : AlreadyGoHomeSheet(),
+                  ? NotCommuteYetSheet(
+                      func: controller.checkStart,
+                    )
+                  : (controller.localCommute!.endAt == null)
+                      ? WorkingNowSheet(
+                          func: controller.checkFinish,
+                        )
+                      : AlreadyGoHomeSheet(),
         );
       }),
     );
@@ -190,11 +190,11 @@ class CommutePageButton extends StatelessWidget {
         height: 50,
         color: FlutterFlowTheme.of(context).primaryColor,
         textStyle: FlutterFlowTheme.of(context).subtitle2.override(
-          fontFamily: 'Poppins',
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
-        ),
+              fontFamily: 'Poppins',
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+            ),
         elevation: 3,
         borderSide: BorderSide(
           color: Colors.transparent,

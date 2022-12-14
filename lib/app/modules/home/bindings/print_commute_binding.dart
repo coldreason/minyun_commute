@@ -4,10 +4,10 @@ import 'package:commute/app/modules/home/controllers/print_commute_controller.da
 import 'package:commute/app/modules/home/repositories/print_commute_repository.dart';
 import 'package:get/get.dart';
 
-
-class PrintCommuteBinding{
+class PrintCommuteBinding {
   void dependencies() {
     Get.lazyPut<PrintCommuteController>(() => PrintCommuteController(
-        repository: PrintCommuteRepository(fbCommuteProvider: FbCommuteProvider())));
+        repository:
+            PrintCommuteRepository(fbCommuteProvider: FbCommuteProvider())));
   }
 }

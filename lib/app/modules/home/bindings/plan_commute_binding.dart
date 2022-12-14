@@ -4,8 +4,7 @@ import 'package:commute/app/modules/home/controllers/plan_commute_controller.dar
 import 'package:commute/app/modules/home/repositories/plan_commute_repository.dart';
 import 'package:get/get.dart';
 
-
-class PlanCommuteBinding{
+class PlanCommuteBinding {
   void dependencies() {
     Get.lazyPut<PlanCommuteController>(() => PlanCommuteController(
         repository: PlanCommuteRepository(fbPlanProvider: FbPlanProvider())));
