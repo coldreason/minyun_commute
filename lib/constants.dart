@@ -30,6 +30,11 @@ enum UserScreenType{
   mobile,tablet,pcWeb
 }
 
+enum CommuteStatus{
+  DataNotExist, GoExist,
+  EndExist
+}
+
 final List<String> planTimesH = [
   "06",
   "07",

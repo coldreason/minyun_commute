@@ -12,12 +12,6 @@ class HomeRepository {
 
   Future<Map<String,FbCommute>> getCommutes(String id,DateTime month) => fbCommuteProvider.getCommutesByMonth(id,month);
 
-  Future<void> setPlans(String id,DateTime month,Map<String,FbPlan> plans) => fbPlanProvider.setPlan(id, month, plans);
-
-  Future<Map<String,FbPlan>> getPlans(String id,DateTime month)=> fbPlanProvider.getFbPlanByIdMonth(id, month);
-
   Future<Map<String,List<FbPlan>>> getPlansbyMonth(DateTime month)=> fbPlanProvider.getPlansByMonth(month);
-
-  Future<void> deletePlan(String id,DateTime date) => fbPlanProvider.deletePlan(id,date);
 
 }

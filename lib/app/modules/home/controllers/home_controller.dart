@@ -5,6 +5,7 @@ import 'package:commute/app/data/models/fb_user_model.dart';
 import 'package:commute/app/data/services/fb_my_plan_service.dart';
 import 'package:commute/app/modules/home/bindings/commute_check_binding.dart';
 import 'package:commute/app/modules/home/bindings/plan_commute_binding.dart';
+import 'package:commute/app/modules/home/bindings/print_commute_binding.dart';
 import 'package:commute/app/modules/home/repositories/home_repository.dart';
 import 'package:commute/app/data/services/fb_all_user_service.dart';
 import 'package:commute/app/data/services/fb_commute_service.dart';
@@ -39,6 +40,8 @@ class HomeController extends GetxController
         CommuteCheckBinding().dependencies();
       }if(tabController.index==1){
         PlanCommuteBinding().dependencies();
+      }if(tabController.index==3){
+        PrintCommuteBinding().dependencies();
       }
     });
 
