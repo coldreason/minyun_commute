@@ -30,7 +30,6 @@ class HomeController extends GetxController
   late DateTime targetMonth;
   Map<String, List<FbPlan>> allPlans = {};
   Map<String, FbUser> allUser = {};
-  Map<String, FbCommute> commutes = {};
 
   @override
   void onInit() async {
@@ -56,7 +55,6 @@ class HomeController extends GetxController
     localUser = Get.find<FbUserService>().fbUser;
 
     getAllPlans();
-    getAllCommutes();
     super.onInit();
   }
 
@@ -93,18 +91,5 @@ class HomeController extends GetxController
     Map<String, List<FbPlan>> ret = await homeRepository.getPlansbyMonth(targetMonth);
     allPlans = ret;
     update();
-  }
-
-  String calcWorkUnit(FbCommute commute){
-    DateTime distance = (Timestamp.fromMillisecondsSinceEpoch(commute.endAt!.millisecondsSinceEpoch - commute.comeAt!.millisecondsSinceEpoch)).toDate();
-    int total = (distance.hour-9)*60 + distance.minute - ((commute!.workAtLunch==true)?0:60);
-    if(total>390)return planUnitList[2];
-    else if(total>285)return planUnitList[1];
-    else if(total<60)return "";
-    return planUnitList[0];
-  }
-
-  void getAllCommutes()async{
-   commutes =  await homeRepository.getCommutes(localUser!.id!, targetMonth);
   }
 }

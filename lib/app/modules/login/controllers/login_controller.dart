@@ -1,5 +1,5 @@
 import 'package:commute/app/data/models/fb_user_model.dart';
-import 'package:commute/app/data/repositories/login_repository.dart';
+import 'package:commute/app/modules/login/repositoryies/login_repository.dart';
 import 'package:commute/app/data/services/fb_all_user_service.dart';
 import 'package:commute/app/data/services/fb_user_service.dart';
 import 'package:commute/app/routes/app_pages.dart';
