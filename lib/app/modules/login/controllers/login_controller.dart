@@ -3,8 +3,10 @@ import 'package:commute/app/modules/login/repositoryies/login_repository.dart';
 import 'package:commute/app/data/services/fb_all_user_service.dart';
 import 'package:commute/app/data/services/fb_user_service.dart';
 import 'package:commute/app/routes/app_pages.dart';
+import 'package:commute/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
   final LoginRepository loginRepository;
@@ -12,6 +14,7 @@ class LoginController extends GetxController {
   final TextEditingController emailAddressController = TextEditingController();
   final TextEditingController passwordTextController = TextEditingController();
   bool passwordVisibility = false;
+  final box = GetStorage();
   String ip = "";
 
   LoginController({required this.loginRepository});
@@ -21,13 +24,20 @@ class LoginController extends GetxController {
     super.onInit();
 
     ip = (await loginRepository.getIp()) ?? "error";
-
-    Get.find<FbAllUserService>().fbAllUser = await loginRepository.getAllUser();
-    //for testing
-    // FbUser? fbUser = await loginRepository.getUser('dreason');
-    // Get.find<FbUserService>().fbUser = fbUser!;
-    // Get.toNamed(Routes.HOME);
+    if (Get.find<FbAllUserService>().initialized == false) {
+      Get.find<FbAllUserService>().fbAllUser =
+          await loginRepository.getAllUser();
+    }
+    signInSilently();
     update();
+  }
+
+  void signInSilently() async {
+    Map<String,dynamic>? userMap = box.read(FirebaseConstants.user);
+    if (userMap != null) {
+      Get.find<FbUserService>().fbUser = FbUser.fromJson(userMap);
+      Get.toNamed(Routes.HOME);
+    }
   }
 
   void signIn() async {
@@ -49,6 +59,7 @@ class LoginController extends GetxController {
       emailAddressController.clear();
       passwordTextController.clear();
       Get.find<FbUserService>().fbUser = fbUser;
+      box.write(FirebaseConstants.user, fbUser);
       Get.toNamed(Routes.HOME);
     }
   }

@@ -13,6 +13,7 @@ import 'package:commute/app/routes/app_pages.dart';
 import 'package:commute/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class HomeController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -50,6 +51,8 @@ class HomeController extends GetxController
     Get.find<FbUserService>().clear();
     Get.find<FbCommuteService>().clear();
     Get.find<FbMyPlanService>().clear();
+    final box = GetStorage();
+    box.write(FirebaseConstants.user, null);
     Get.offAllNamed(Routes.LOGIN);
   }
 

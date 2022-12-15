@@ -1,9 +1,3 @@
-class Constants {
-  static const chatPerUser = 'userChat';
-  static const chatRoomInfo = "chatRoomInfo";
-  static const chats = "chats";
-}
-
 class FirebaseConstants {
   static const user = "user";
   static const commute = "commute";
