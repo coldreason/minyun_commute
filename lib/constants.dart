@@ -20,6 +20,8 @@ class FirebaseConstants {
 
 enum UserScreenType { mobile, tablet, pcWeb }
 
+enum AuthType {root, user, viewer}
+
 enum CommuteStatus { dataNotExist, goExist, endExist }
 const List<String> planTimesH = [
   "06",

@@ -1,9 +1,11 @@
+import 'package:commute/app/data/services/auth_type_service.dart';
 import 'package:commute/app/data/services/fb_all_user_service.dart';
 import 'package:commute/app/data/services/fb_commute_service.dart';
 import 'package:commute/app/data/services/fb_my_plan_service.dart';
 import 'package:commute/app/data/services/fb_user_service.dart';
 import 'package:commute/app/data/services/screen_type_service.dart';
 import 'package:commute/app/flutter_flow/flutter_flow_theme.dart';
+import 'package:commute/constants.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -36,5 +38,6 @@ Future<void> dependencies() async {
   Get.put(FbCommuteService());
   Get.put(FbMyPlanService());
   Get.put(ScreenTypeService());
+  Get.put(AuthTypeService());
   await GetStorage.init();
 }

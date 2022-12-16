@@ -1,3 +1,4 @@
+import 'package:commute/app/data/providers/fb_user_cached_provider.dart';
 import 'package:commute/app/data/providers/fb_user_provider.dart';
 import 'package:commute/app/data/providers/ip_provider.dart';
 import 'package:commute/app/modules/login/repositoryies/login_repository.dart';
@@ -10,8 +11,8 @@ class LoginBinding extends Bindings {
   void dependencies() {
     Get.lazyPut<LoginController>(
       () => LoginController(
-          loginRepository: LoginRepository(
-              fbUserProvider: FbUserProvider(), ipProvider: IPProvider())),
+          repository: LoginRepository(
+              fbUserProvider: FbUserProvider(), ipProvider: IPProvider(), fbUserCachedProvider: FbUserCachedProvider())),
     );
   }
 }

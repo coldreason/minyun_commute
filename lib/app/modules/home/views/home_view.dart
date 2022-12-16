@@ -9,9 +9,26 @@ import 'pages/plan_commute_page.dart';
 import 'pages/print_commutes_page.dart';
 
 class HomeView extends GetView<HomeController> {
+
+  List<Widget> _tabs = [Tab(
+      child: Column(children: <Widget>[
+        Icon(Icons.pending_actions),
+        Text("출퇴근 관리")
+      ])),
+    Tab(icon: Icon(Icons.memory), text: "근무계획"),
+    Tab(icon: Icon(Icons.library_books), text: "근무표"),
+    Tab(icon: Icon(Icons.book_outlined), text: "근무내역")];
+
+  List<Widget> _tabPages = [
+    CommuteCheckPage(),
+    PlanCommutePage(),
+    PlanAllPage(),
+    PrintCommutes()
+  ];
   @override
   Widget build(BuildContext context) {
     controller.setUserScreenSize(MediaQuery.of(context).size.width.toInt());
+    print(controller.offset);
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(
@@ -33,24 +50,15 @@ class HomeView extends GetView<HomeController> {
         bottom: TabBar(
           controller: controller.tabController,
           tabs: <Widget>[
-            Tab(
-                child: Column(children: <Widget>[
-              Icon(Icons.pending_actions),
-              Text("출퇴근 관리")
-            ])),
-            Tab(icon: Icon(Icons.memory), text: "근무계획"),
-            Tab(icon: Icon(Icons.library_books), text: "근무표"),
-            Tab(icon: Icon(Icons.book_outlined), text: "근무내역")
+            for(int i=0;i<controller.tabController.length;i++)_tabs[controller.offset+i]
           ],
         ),
       ),
-      body: TabBarView(
+      body:
+      TabBarView(
         controller: controller.tabController,
         children: <Widget>[
-          CommuteCheckPage(),
-          PlanCommutePage(),
-          PlanAllPage(),
-          PrintCommutes()
+          for(int i=0;i<controller.tabController.length;i++)_tabPages[controller.offset+i]
         ],
       ),
     );

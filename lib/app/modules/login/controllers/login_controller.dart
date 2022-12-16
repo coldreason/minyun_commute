@@ -1,4 +1,5 @@
 import 'package:commute/app/data/models/fb_user_model.dart';
+import 'package:commute/app/data/services/auth_type_service.dart';
 import 'package:commute/app/modules/login/repositoryies/login_repository.dart';
 import 'package:commute/app/data/services/fb_all_user_service.dart';
 import 'package:commute/app/data/services/fb_user_service.dart';
@@ -6,43 +7,48 @@ import 'package:commute/app/routes/app_pages.dart';
 import 'package:commute/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class LoginController extends GetxController {
-  final LoginRepository loginRepository;
+  final LoginRepository repository;
 
   final TextEditingController emailAddressController = TextEditingController();
   final TextEditingController passwordTextController = TextEditingController();
+  final FbAllUserService _fbAllUserService = Get.find<FbAllUserService>();
+  final AuthTypeService _authTypeService = Get.find<AuthTypeService>();
+  final FbUserService _fbUserService = Get.find<FbUserService>();
   bool passwordVisibility = false;
-  final box = GetStorage();
   String ip = "";
 
-  LoginController({required this.loginRepository});
+  LoginController({required this.repository});
 
   @override
   void onInit() async {
     super.onInit();
 
-    ip = (await loginRepository.getIp()) ?? "error";
-    if (Get.find<FbAllUserService>().initialized == false) {
-      Get.find<FbAllUserService>().fbAllUser =
-          await loginRepository.getAllUser();
+    ip = (await repository.getIp()) ?? "error";
+    if (ip != 'error' && ip.substring(0, 7) == '163.152') {
+      print('at work');
+      _authTypeService.authType = AuthType.user;
+    }
+    // _authTypeService.authType = AuthType.user;
+    if (_fbAllUserService.initialized == false) {
+      _fbAllUserService.fbAllUser = await repository.getAllUser();
     }
     signInSilently();
     update();
   }
 
   void signInSilently() async {
-    Map<String,dynamic>? userMap = box.read(FirebaseConstants.user);
-    if (userMap != null) {
-      Get.find<FbUserService>().fbUser = FbUser.fromJson(userMap);
+    FbUser? fbUser = repository.getCachedUser();
+    if (fbUser != null) {
+      _fbUserService.fbUser = fbUser;
       Get.toNamed(Routes.HOME);
     }
   }
 
   void signIn() async {
     FbUser? fbUser =
-        await loginRepository.getUser(emailAddressController.value.text);
+        await repository.getUser(emailAddressController.value.text);
     if (fbUser == null) {
       Get.dialog(
         AlertDialog(
@@ -58,8 +64,8 @@ class LoginController extends GetxController {
     } else {
       emailAddressController.clear();
       passwordTextController.clear();
-      Get.find<FbUserService>().fbUser = fbUser;
-      box.write(FirebaseConstants.user, fbUser);
+      _fbUserService.fbUser = fbUser;
+      repository.setCachedUser(fbUser);
       Get.toNamed(Routes.HOME);
     }
   }
