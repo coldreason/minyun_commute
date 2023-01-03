@@ -37,9 +37,9 @@ class PlanAllController extends GetxController {
     update();
   }
 
-  void monthChangeAll(DateTime month) {
+  void monthChangeAll(DateTime month) async{
     targetMonth = month;
-    getAllPlans();
+    await getAllPlans();
     update();
   }
 
