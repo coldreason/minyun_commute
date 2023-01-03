@@ -253,15 +253,19 @@ class LoginView extends GetView<LoginController> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                     ),
-                                    Text('updated at 12.16')
+                                    Text('updated at 01.03')
                                   ],
                                 ),
                                 Text(
-                                  '출력기능 추가 : 12/20',
+                                  '근무 시간표 소속별 메뉴 01/03',
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                                 Text(
-                                  '근무 내역 수정, 전체 조회등의 admin 기능 12/20',
+                                  '근무 내역 수정, 전체 조회등의 admin 기능 01/03',
+                                  style: FlutterFlowTheme.of(context).bodyText2,
+                                ),
+                                Text(
+                                  '자동로그인 방식 변경 01/04',
                                   style: FlutterFlowTheme.of(context).bodyText2,
                                 ),
                                 Text(
