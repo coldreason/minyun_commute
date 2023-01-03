@@ -1,16 +1,20 @@
 import 'package:commute/app/modules/home/controllers/print_commute_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:printing/printing.dart';
 
 class PrintCommutes extends GetView<PrintCommuteController> {
   const PrintCommutes({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Page
     return Container(
       child: GetBuilder<PrintCommuteController>(builder: (_) {
         return Column(
           children: [
+            IconButton(
+                onPressed: controller.printPressed, icon: Icon(Icons.add)),
             Container(
               height: 40,
               child: Row(

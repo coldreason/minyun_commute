@@ -24,6 +24,9 @@ dependencies:
   page_transition: 2.0.4
   table_calendar: ^3.0.8
   selectable_list: ^0.1.1
+  printing: ^5.9.3
+  pdf: ^3.8.4
+
   flutter: 
     sdk: flutter
 

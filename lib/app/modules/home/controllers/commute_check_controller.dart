@@ -33,14 +33,18 @@ class CommuteCheckController extends GetxController {
   }
 
   void changeLunchTimeWork(bool value) async {
-    localCommute!.workAtLunch = value;
+    localCommute =
+    await repository.getCommute(localUser.id!, targetMonth);
 
-    Get.find<FbCommuteService>().fbCommute = await repository.setCommute(
+    localCommute!.workAtLunch = value;
+        Get.find<FbCommuteService>().fbCommute = await repository.setCommute(
         localUser.id!, Timestamp.now().toDate(), localCommute!);
     update();
   }
 
   void checkStart() async {
+    localCommute =
+    await repository.getCommute(localUser.id!, targetMonth);
     localCommute!.comeAt = Timestamp.now();
     Get.find<FbCommuteService>().fbCommute = await repository.setCommute(
         localUser.id!, localCommute!.comeAt!.toDate(), localCommute!);

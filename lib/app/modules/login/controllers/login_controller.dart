@@ -30,7 +30,7 @@ class LoginController extends GetxController {
       print('at work');
       _authTypeService.authType = AuthType.user;
     }
-    // _authTypeService.authType = AuthType.user;
+    _authTypeService.authType = AuthType.user;
     if (_fbAllUserService.initialized == false) {
       _fbAllUserService.fbAllUser = await repository.getAllUser();
     }
@@ -40,6 +40,10 @@ class LoginController extends GetxController {
 
   void signInSilently() async {
     FbUser? fbUser = repository.getCachedUser();
+
+    //for debug:
+    fbUser = await repository.getUser("dreason");
+
     if (fbUser != null) {
       _fbUserService.fbUser = fbUser;
       Get.toNamed(Routes.HOME);

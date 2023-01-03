@@ -22,5 +22,5 @@ class LoginRepository {
 
   FbUser? getCachedUser()=> fbUserCachedProvider.getCachedUser();
 
-  void setCachedUser(FbUser _fbUser) => fbUserCachedProvider.setCachedUser(_fbUser);
+  void setCachedUser(FbUser fbUser) => fbUserCachedProvider.setCachedUser(fbUser);
 }
