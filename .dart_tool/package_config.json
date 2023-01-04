@@ -362,6 +362,12 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "roundcheckbox",
+      "rootUri": "file:///D:/flutter/.pub-cache/hosted/pub.dartlang.org/roundcheckbox-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "selectable_list",
       "rootUri": "file:///D:/flutter/.pub-cache/hosted/pub.dartlang.org/selectable_list-0.1.1",
       "packageUri": "lib/",
@@ -560,7 +566,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-12-29T11:39:33.527523Z",
+  "generated": "2023-01-04T04:04:15.175127Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }

@@ -18,7 +18,9 @@ class PlanAllController extends GetxController {
       .find<FbUserService>()
       .fbUser;
   Map<String, List<FbPlan>> allPlans = {};
+  Map<String, List<FbPlan>> viewPlans = {};
   Map<String, FbUser> allUser = {};
+  List<bool> filter = [true,true];
   late DateTime targetMonth;
 
   @override
@@ -47,8 +49,22 @@ class PlanAllController extends GetxController {
     allPlans = await repository.getPlansbyMonth(targetMonth);
   }
 
+  void filterSelected(bool selected,int department){
+    filter[department] = selected;
+    update();
+  }
+
   List<String> getCalanderListString(DateTime dateTime,UserScreenType userScreenType) {
     List<FbPlan> plans = allPlans[getDateString(dateTime)]??[];
-    return [for(var v in plans)"${allUser[v.id]!.name!} ${userScreenType == UserScreenType.pcWeb ?"${dateTimeToString(v.comeAt!.toDate())} - ${dateTimeToString(v.endAt!.toDate())}":""}"];
+    List<String> ret = [];
+    for(FbPlan v in plans){
+      if(allUser[v.id]!.department=="국어사전실"&& filter[0]==true){
+        ret.add("${allUser[v.id]!.name!} ${userScreenType == UserScreenType.pcWeb ?"${dateTimeToString(v.comeAt!.toDate())} - ${dateTimeToString(v.endAt!.toDate())}":""}");
+      }
+      if(allUser[v.id]!.department=="중한사전실"&& filter[1]==true){
+        ret.add("${allUser[v.id]!.name!} ${userScreenType == UserScreenType.pcWeb ?"${dateTimeToString(v.comeAt!.toDate())} - ${dateTimeToString(v.endAt!.toDate())}":""}");
+      }
+    }
+    return ret;
   }
 }

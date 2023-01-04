@@ -4,6 +4,8 @@ import 'package:commute/constants.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:roundcheckbox/roundcheckbox.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class PlanAllPage extends GetView<PlanAllController> {
@@ -13,67 +15,144 @@ class PlanAllPage extends GetView<PlanAllController> {
   Widget build(BuildContext context) {
     UserScreenType userScreenType =
         Get.find<ScreenTypeService>().userScreenType;
+    print(userScreenType);
     return SingleChildScrollView(
         child: GetBuilder<PlanAllController>(builder: (_) {
-      return TableCalendar(
-        rowHeight: userScreenType == UserScreenType.pcWeb
-            ? 130
-            : userScreenType == UserScreenType.tablet
-                ? 100
-                : 80,
-        calendarStyle: CalendarStyle(
-            todayDecoration: BoxDecoration(color: Colors.orange),
-            selectedDecoration:
-                BoxDecoration(color: Theme.of(context).primaryColor),
-            todayTextStyle: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 18.0,
-                color: Colors.white)),
-        headerStyle: HeaderStyle(
-          titleCentered: true,
-          formatButtonDecoration: BoxDecoration(
-            color: Colors.orange,
-            borderRadius: BorderRadius.circular(20.0),
+      return Column(
+        children: [
+          Row(
+            children: [
+              FilterButton(
+                func: controller.filterSelected,
+                isChecked: controller.filter[0],
+                buttonIndex: 0,
+              ),
+              FilterButton(
+                func: controller.filterSelected,
+                isChecked: controller.filter[1],
+                buttonIndex: 1,
+              ),
+            ],
           ),
-          formatButtonTextStyle: TextStyle(color: Colors.white),
-          formatButtonShowsNext: false,
-        ),
-        onPageChanged: (dateTime) {
-          controller.monthChangeAll(dateTime);
-        },
-        startingDayOfWeek: StartingDayOfWeek.sunday,
-        calendarBuilders: CalendarBuilders(
-          outsideBuilder: (context, date, events) {
-            return DateBody(date: date, color: Colors.grey);
-          },
-          todayBuilder: (context, date, events) {
-            return DateBody(
-              date: date,
-              color: Colors.orange,
-              body: PlanUsersTile(
-                plans: controller.getCalanderListString(date, userScreenType),
-                userScreenType: userScreenType,
+          TableCalendar(
+            rowHeight: userScreenType == UserScreenType.pcWeb
+                ? 130
+                : userScreenType == UserScreenType.tablet
+                    ? 100
+                    : 80,
+            calendarStyle: CalendarStyle(
+                todayDecoration: BoxDecoration(color: Colors.orange),
+                selectedDecoration:
+                    BoxDecoration(color: Theme.of(context).primaryColor),
+                todayTextStyle: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                    color: Colors.white)),
+            headerStyle: HeaderStyle(
+              titleCentered: true,
+              formatButtonDecoration: BoxDecoration(
+                color: Colors.orange,
+                borderRadius: BorderRadius.circular(20.0),
               ),
-            );
-          },
-          defaultBuilder: (context, date, events) {
-            return DateBody(
-              date: date,
-              color: Colors.black,
-              body: PlanUsersTile(
-                plans: controller.getCalanderListString(date, userScreenType),
-                userScreenType: userScreenType,
-              ),
-            );
-          },
-        ),
-        focusedDay: controller.targetMonth,
-        firstDay: DateTime.utc(2020),
-        lastDay: DateTime.utc(2030),
+              formatButtonTextStyle: TextStyle(color: Colors.white),
+              formatButtonShowsNext: false,
+            ),
+            onPageChanged: (dateTime) {
+              controller.monthChangeAll(dateTime);
+            },
+            startingDayOfWeek: StartingDayOfWeek.sunday,
+            calendarBuilders: CalendarBuilders(
+              outsideBuilder: (context, date, events) {
+                return DateBody(date: date, color: Colors.grey);
+              },
+              todayBuilder: (context, date, events) {
+                return DateBody(
+                  date: date,
+                  color: Colors.orange,
+                  body: PlanUsersTile(
+                    plans:
+                        controller.getCalanderListString(date, userScreenType),
+                    userScreenType: userScreenType,
+                  ),
+                );
+              },
+              defaultBuilder: (context, date, events) {
+                return DateBody(
+                  date: date,
+                  color: Colors.black,
+                  body: PlanUsersTile(
+                    plans:
+                        controller.getCalanderListString(date, userScreenType),
+                    userScreenType: userScreenType,
+                  ),
+                );
+              },
+            ),
+            focusedDay: controller.targetMonth,
+            firstDay: DateTime.utc(2020),
+            lastDay: DateTime.utc(2030),
+          ),
+        ],
       );
     }));
   }
 }
+
+class FilterButton extends StatelessWidget {
+  const FilterButton({
+    Key? key,
+    required this.func,
+    required this.isChecked,
+    required this.buttonIndex,
+  }) : super(key: key);
+  final Function func;
+  final bool isChecked;
+  final int buttonIndex;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Text(
+              filterString[buttonIndex],
+              style: GoogleFonts.lato(
+                textStyle: Theme.of(context).textTheme.headline4,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.normal,
+              ),
+            ),
+          ),
+        ),
+        RoundCheckBox(
+          isChecked: isChecked,
+          checkedColor: courseColor[buttonIndex],
+          size: 30,
+          onTap: (selected) {
+            func(selected, buttonIndex);
+          },
+        ),
+      ],
+    );
+    ;
+  }
+}
+
+List<Color> courseColor = [
+  Colors.cyanAccent,
+  Colors.greenAccent,
+  Colors.yellow,
+  Colors.orange,
+  Colors.purpleAccent
+];
+
+List<String> filterString = [
+  "국어사전실",
+  "중한사전실",
+];
 
 class DateBody extends StatelessWidget {
   const DateBody({Key? key, required this.date, required this.color, this.body})

@@ -40,7 +40,7 @@ class LoginController extends GetxController {
   void signInSilently() async {
     FbUser? fbUser = repository.getCachedUser();
 
-    //for debug:
+    // for debug:
     // fbUser = await repository.getUser("dreason");
 
     if (fbUser != null) {

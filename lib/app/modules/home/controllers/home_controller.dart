@@ -62,5 +62,6 @@ class HomeController extends GetxController
     } else {
       Get.find<ScreenTypeService>().userScreenType = UserScreenType.mobile;
     }
+    print(Get.find<ScreenTypeService>().userScreenType);
   }
 }
