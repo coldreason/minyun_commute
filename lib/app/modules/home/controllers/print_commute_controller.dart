@@ -322,7 +322,7 @@ class PrintCommuteController extends GetxController {
   }
 
   String weekDaytoString(int week){
-    List<String> weekString = ['(일)','(월)','(화)','(수)','(목)','(금)','(토)',];
+    List<String> weekString = ['(월)','(화)','(수)','(목)','(금)','(토)','(일)'];
     return weekString[week-1];
   }
 }
