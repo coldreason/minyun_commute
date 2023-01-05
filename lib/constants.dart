@@ -1,5 +1,5 @@
 class FirebaseConstants {
-  static const user = "user";
+  static const users = "users";
   static const commute = "commute";
   static const plan = "plan";
 

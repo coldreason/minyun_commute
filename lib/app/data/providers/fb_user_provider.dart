@@ -5,23 +5,23 @@ import 'package:get/get.dart';
 import '../models/fb_user_model.dart';
 
 class FbUserProvider extends GetConnect {
-  CollectionReference<FbUser> userRef = FirebaseFirestore.instance
-      .collection(FirebaseConstants.user)
-      .withConverter<FbUser>(
-        fromFirestore: (snapshot, _) => FbUser.fromJson(snapshot.data()!),
-        toFirestore: (FbUser, _) => FbUser.toJson(),
-      );
+  DocumentReference<Map<String, dynamic>> userRef = FirebaseFirestore.instance
+      .collection(FirebaseConstants.users)
+      .doc(FirebaseConstants.users);
 
   Future<FbUser?> getUser(String userId) async {
-    DocumentSnapshot<FbUser> documentSnapshot = await userRef.doc(userId).get();
-    return documentSnapshot.data();
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await userRef.get();
+    return FbUser.fromJson(documentSnapshot.data()![userId]);
   }
 
   Future<Map<String, FbUser>> getAllUser() async {
-    QuerySnapshot<FbUser> querySnapshot = await userRef.get();
+    DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await userRef.get();
 
     return {
-      for (QueryDocumentSnapshot<FbUser> e in querySnapshot.docs) e.id: e.data()
+      for (String e in documentSnapshot.data()!.keys)
+        e: FbUser.fromJson(documentSnapshot.data()![e])
     };
   }
 }

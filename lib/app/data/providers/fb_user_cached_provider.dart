@@ -9,7 +9,7 @@ class FbUserCachedProvider {
 
   FbUser? getCachedUser() {
 
-    Map<String, dynamic>? userMap = _box.read(FirebaseConstants.user);
+    Map<String, dynamic>? userMap = _box.read(FirebaseConstants.users);
     if (userMap != null) {
       return FbUser.fromJson(userMap);
     }
@@ -17,8 +17,8 @@ class FbUserCachedProvider {
   }
 
   void setCachedUser(FbUser fbUser){
-    _box.write(FirebaseConstants.user, fbUser.toJson());
+    _box.write(FirebaseConstants.users, fbUser.toJson());
   }
 
-  void clearCachedUser()=> _box.remove(FirebaseConstants.user);
+  void clearCachedUser()=> _box.remove(FirebaseConstants.users);
 }

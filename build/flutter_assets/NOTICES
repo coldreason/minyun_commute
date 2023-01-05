@@ -5258,6 +5258,7 @@ material_color_utilities
 cloud_firestore_web
 firebase_core
 firebase_core_platform_interface
+roundcheckbox
 
 // Copyright 2017 The Chromium Authors. All rights reserved.
 //
