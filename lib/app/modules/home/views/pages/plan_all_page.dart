@@ -32,7 +32,7 @@ class PlanAllPage extends GetView<PlanAllController> {
                   isChecked: controller.filter[1],
                   buttonIndex: 1,
                 ),
-                MaterialButton(onPressed: controller.savePressed,child: Text('save'),)
+                MaterialButton(onPressed: controller.savePressed,child: Text('Save'),)
               ],
             ),
             WidgetsToImage(
