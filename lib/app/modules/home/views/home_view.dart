@@ -28,7 +28,6 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     controller.setUserScreenSize(MediaQuery.of(context).size.width.toInt());
-    print(MediaQuery.of(context).size.width.toInt());
     return Scaffold(
       appBar: AppBar(
         leading: BackButton(

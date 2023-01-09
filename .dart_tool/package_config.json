@@ -542,6 +542,12 @@
       "languageVersion": "2.14"
     },
     {
+      "name": "widgets_to_image",
+      "rootUri": "file:///D:/flutter/.pub-cache/hosted/pub.dartlang.org/widgets_to_image-0.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
       "name": "win32",
       "rootUri": "file:///D:/flutter/.pub-cache/hosted/pub.dartlang.org/win32-3.1.1",
       "packageUri": "lib/",
@@ -566,7 +572,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-01-04T04:04:15.175127Z",
+  "generated": "2023-01-09T05:43:58.829653Z",
   "generator": "pub",
   "generatorVersion": "2.18.6"
 }
