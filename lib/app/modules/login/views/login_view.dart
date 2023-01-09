@@ -253,7 +253,7 @@ class LoginView extends GetView<LoginController> {
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2,
                                     ),
-                                    Text('updated at 01.04')
+                                    Text('updated at 01.10')
                                   ],
                                 ),
                                 Text(
