@@ -2,6 +2,8 @@
 
 Commute management System for Research Institute of Korean Studies
 
+using git action chain, firebase hosting, firestore, getx
+
 # active resource 
 
 https://commute-f348d.web.app
