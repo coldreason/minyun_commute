@@ -36,11 +36,16 @@ class FbPlanProvider extends GetConnect {
       DocumentSnapshot<Object?> documentSnapshot =
           await planRef.doc(monthString).get();
 
-      Map<String, Map<String, dynamic>> plansPerUser =
+      Map<String, dynamic> plansPerUser =
           (documentSnapshot.data() as Map<String, dynamic>)[value.id!] ?? {};
 
       plansPerUser[dateString] = value.toJson();
-      await setMonthPlanWithUserId(id, monthString, plansPerUser);
+      print(value.id);
+      print(plansPerUser);
+
+      await planRef
+          .doc(monthString)
+          .set({value.id!: plansPerUser}, SetOptions(merge: true));
     });
   }
 
@@ -48,17 +53,12 @@ class FbPlanProvider extends GetConnect {
     String monthString = getMonthString(date);
     DocumentSnapshot<Object?> documentSnapshot =
         await planRef.doc(monthString).get();
-    Map<String, dynamic> plansPerUser =
-        (documentSnapshot.data() as Map<String, dynamic>)[id]!;
+    Map<String, dynamic> monthPlanMap =
+        documentSnapshot.data() as Map<String, dynamic>;
+    Map<String, dynamic> plansPerUser = monthPlanMap[id]!;
     plansPerUser.remove(getDateString(date));
-    await setMonthPlanWithUserId(id, monthString, plansPerUser);
-  }
-
-  Future<void> setMonthPlanWithUserId(
-      String id, String monthString, Map<String, dynamic> plansPerUser) async {
-    await planRef
-        .doc(monthString)
-        .set({id: plansPerUser}, SetOptions(merge: true));
+    monthPlanMap[id] = plansPerUser;
+    await planRef.doc(monthString).set(monthPlanMap);
   }
 
   Future<Map<String, FbPlan>> getFbPlanByIdMonth(
